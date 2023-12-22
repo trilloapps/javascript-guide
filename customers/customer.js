@@ -8,11 +8,19 @@ const exampleData = [
     { id: 7, name: 'Jane',  email: 'jane.smith@example.com', phone: '(555) 987-6543', address: '456 Oak St, Town', status: 'Inactive' }
     // Add more data objects as needed
 ];
+var itemsPerPage = 5;
+var totalPages = Math.ceil(exampleData.length / itemsPerPage);
+var currentPage = 1;
 
 // Function to create table rows dynamically
 function populateTable() {
     const tbody = document.getElementById('customerTableBody');
-    exampleData.forEach(data => {
+    tbody.innerHTML = ''; // Clear existing rows
+    // Calculate the range of items to display for the current page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentItems = exampleData.slice(startIndex, endIndex);
+    currentItems.forEach(data => {
         const row = document.createElement('tr');
         row.addEventListener('click', function () {
             // You can handle the click event here, for example, log the customer's ID
@@ -67,9 +75,34 @@ function searchByName(searchTerm) {
         noDataMessage.style.display = 'block'; // Show the message if there is no match
     }
 }
+function generatePagination() {
+    var paginationElement = document.getElementById("pagination");
+    paginationElement.innerHTML = '';
+    // Add "Previous" button
+    paginationElement.innerHTML += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + (currentPage - 1) + ')" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+    // Add page numbers
+    for (var i = 1; i <= totalPages; i++) {
+        paginationElement.innerHTML += '<li class="page-item ' + (currentPage === i ? 'active' : '') + '"><a class="page-link" href="#" onclick="changePage(' + i + ')">' + i + '</a></li>';
+    }
+    // Add "Next" button
+    paginationElement.innerHTML += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + (currentPage + 1) + ')" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+}
+
+function changePage(page) {
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        populateTable();
+        generatePagination();
+
+        // Add logic here to fetch and display data for the new page
+        // You can make an AJAX request to load the content dynamically
+    }
+}
+
 // Call the function to populate the table when the window has finished loading
 window.onload = function () {
     const noDataMessage = document.getElementById('noDataFound');
     noDataMessage.style.display = 'none'; // Hide the message if there is a match
     populateTable();
+    generatePagination();
 };
