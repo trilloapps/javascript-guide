@@ -1,32 +1,60 @@
-function LoginSubmitForm() {
-    console.log("herrer");
-    // Get values from the form
-    const userId = document.getElementById('userId').value;
-    const password = document.getElementById('password').value;
 
-    // Make the login API call
-    apiService.login(userId, password)
+const userIdInput = document.getElementById('userId');
+const passwordInput = document.getElementById('password');
+const userIdError = document.getElementById('userIdError');
+const passwordError = document.getElementById('passwordError');
+userIdError.classList.add('text-danger');
+passwordError.classList.add('text-danger');
+userIdInput.addEventListener('input', clearValidationMessage);
+passwordInput.addEventListener('input', clearValidationMessage);
+
+function clearValidationMessage() {
+    userIdError.innerText = "";
+    passwordError.innerText = "";
+}
+
+// Validate user input
+function validateInputs() {
+    const userId = userIdInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!userId && !password) {
+        userIdError.innerHTML = "User ID is required.";
+        passwordError.innerHTML = "Password is required.";
+        return false;
+    }
+
+    if (!userId) {
+        userIdError.innerHTML = "User ID is required.";
+        return false;
+    }
+
+    if (!password) {
+        passwordError.innerHTML = "Password is required.";
+        return false;
+    }
+
+    return true;
+}
+function LoginSubmitForm() {
+    if (validateInputs()) {
+        const userId = userIdInput.value
+        const password = passwordInput.value
+        apiService.login(userId, password)
         .then(response => {
-            // Check if the response indicates success
             if (response.status=='connected') {
-                // Store user information and access token in local storage
                 localStorageService.setItem('userDetail', JSON.stringify(response.user));
                 localStorageService.setItem('accessToken', response.accessToken);;
-
-                // Optionally, redirect to a new page or perform other actions upon successful login
-                console.log('Login successful. Redirecting to the dashboard...');
-                window.location.href = '/customers/customer.html'; // Change the URL as needed
+                window.location.href = '/customers/customer.html';
             } else {
                 console.log(response.message);
                 showToast(response.message,'danger');
-                // Display an error message if the login was not successful
-                console.error('Login failed. Error:', response.message);
             }
         })
         .catch(error => {
-            // Handle network or other errors
             showToast(error.message,'danger');
         });
+    }
 }
 function showToast(message, type) {
     // Create the toast container
@@ -35,8 +63,6 @@ function showToast(message, type) {
     toastContainer.setAttribute('role', 'alert');
     toastContainer.setAttribute('aria-live', 'assertive');
     toastContainer.setAttribute('aria-atomic', 'true');
-
-    // Add 5px top margin
     toastContainer.style.top = '5px';
 
     // Create the toast content

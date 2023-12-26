@@ -1,43 +1,23 @@
-var customerDataList;
-var itemsPerPage = 10;
-var totalPages;
-var currentPage = 1;
-var start = 1;
-var size = 10; // Assuming this is the default size for the first API call
+var customerDataList
+let userDetails;
+const itemsPerPage = 10;
+let totalPages;
+let currentPage = 1;
+let start = 1;
+let size = 10;
+
 
 function populateTable() {
     const tbody = document.getElementById('customerTableBody');
-    tbody.innerHTML = ''; // Clear existing rows
+    tbody.innerHTML = '';
+
     customerDataList.forEach(data => {
         const row = document.createElement('tr');
-        row.addEventListener('click', function () {
-            const jsonString = JSON.stringify(data);
-            window.location.href = `/orders/orders.html?=${data.id}`;
-        });
+        row.addEventListener('click', () => handleRowClick(data));
 
-        // Define the fields you want to display
+        row.appendChild(createImageAndNameCell(data));
+
         const fieldsToDisplay = ['email', 'phone', 'address', 'status'];
-
-        // Create a cell for the image and name
-        const imageAndNameCell = document.createElement('td');
-        imageAndNameCell.classList.add('d-flex', 'gap-2', 'align-items-center');
-
-        // Create an image element
-        const image = document.createElement('img');
-        image.src = data.profilePicture;
-        image.alt = 'Item Image';
-        image.classList.add('img-dimensions', 'rounded-pill');
-        imageAndNameCell.appendChild(image);
-
-        // Create a span for the name
-        const nameSpan = document.createElement('span');
-        nameSpan.textContent = data.firstName + ' ' + data.lastName;
-        imageAndNameCell.appendChild(nameSpan);
-
-        // Append the combined cell to the row
-        row.appendChild(imageAndNameCell);
-
-        // Create cells for other specified data
         fieldsToDisplay.forEach(field => {
             const cell = document.createElement('td');
             if (field === 'status') {
@@ -53,6 +33,28 @@ function populateTable() {
 
         tbody.appendChild(row);
     });
+}
+function createImageAndNameCell(data) {
+    const imageAndNameCell = document.createElement('td');
+    imageAndNameCell.classList.add('d-flex', 'gap-2', 'align-items-center');
+
+    const image = document.createElement('img');
+    image.src = data.profilePicture;
+    image.alt = 'Item Image';
+    image.classList.add('img-dimensions', 'rounded-pill');
+    imageAndNameCell.appendChild(image);
+
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = data.firstName + ' ' + data.lastName;
+    imageAndNameCell.appendChild(nameSpan);
+
+    return imageAndNameCell;
+}
+
+function handleRowClick(data) {
+    const jsonString = JSON.stringify(data);
+    window.location.href = `/orders/orders.html?id=${data.id}`;
+    localStorageService.setItem('customerId', data.id);
 }
 
 
@@ -83,10 +85,13 @@ function searchByName(searchTerm) {
         }
     });
     const noDataMessage = document.getElementById('noDataFound');
+    const pagination = document.getElementById('paginationView');
     if (hasMatch) {
         noDataMessage.style.display = 'none';
+        pagination.style.display = 'block';
     } else {
         noDataMessage.style.display = 'block';
+        pagination.style.display = 'none';
     }
 }
 
@@ -135,6 +140,20 @@ function getCustomersData() {
             showToast(error.message, 'danger');
         });
 }
+function getUserDetail(comingId) {
+    apiService.getUserDetail(comingId)
+        .then(response => {
+            if (response.status == 'failed') {
+                console.log(response.message);
+                showToast(response.message, 'danger');
+            } else {
+                updateProfilePictures(response.data[0])
+            }
+        })
+        .catch(error => {
+            showToast(error.message, 'danger');
+        });
+}
 
 function showToast(message, type) {
     const toastContainer = document.createElement('div');
@@ -170,9 +189,53 @@ function showToast(message, type) {
         bootstrapToast.hide();
     }, 3000);
 }
+async function handleFileUpload(e) {
+    const fileInput = e.target;
+    let functionParam = {
+        userId: userDetails.id
+    }
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('folder', 'public/images');
+    formData.append('makePublic', true);
+    formData.append('functionName', 'AddUserImage');
+    formData.append('functionParam', JSON.stringify(functionParam));
+    try {
+        // Assuming you have an apiService with an uploadImage method
+        const response = await apiService.uploadImage(formData);
+
+        // Update the image source if the upload is successful
+        if (response) {
+            updateProfilePictures(response)
+        } else {
+            showToast(response.message, 'danger');
+        }
+    } catch (error) {
+        showToast(error.message, 'danger');
+    }
+}
+function updateProfilePictures(response) {
+    const profilePic = document.getElementById('profilePic');
+    const profileIcon = document.getElementById('profileImg');
+    const newImageUrl = response.pictureUrl; // Replace with the actual key in the response
+    profilePic.src = newImageUrl;
+    profileIcon.src = newImageUrl
+}
 
 window.onload = function () {
     const noDataMessage = document.getElementById('noDataFound');
     noDataMessage.style.display = 'none';
+    userDetails = JSON.parse(localStorageService.getItem('userDetail'))
+    if (userDetails && userDetails.firstName) {
+        document.getElementById('userName').innerText = userDetails.firstName;
+    }
+    if (userDetails && userDetails.firstName && userDetails.lastName) {
+        document.getElementById('firstNameInput').value = userDetails.firstName;
+        document.getElementById('lastNameInput').value = userDetails.lastName;
+    }
     getCustomersData();
+    var userIdAsString = userDetails.id.toString();
+
+    // Now, you can pass userIdAsString to the getUserDetail function
+    getUserDetail(userIdAsString);
 };
