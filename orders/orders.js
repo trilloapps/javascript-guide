@@ -1,76 +1,57 @@
-const exampleData = [
-    {orderNo: 'o-456', title: 'Smartphone', description: 'High-end mobile device', bookingDate: getRandomDate(), deliveryTime: '2 days', status: 'Pending'},
-    {orderNo: 'o-457', title: 'Laptop', description: 'Powerful laptop for productivity', bookingDate: getRandomDate(), deliveryTime: '4 days', status: 'Delivered'},
-    {orderNo: 'o-458', title: 'Smartwatch', description: 'Fitness and health tracking', bookingDate: getRandomDate(), deliveryTime: '1 day', status: 'Pending'},
-    {orderNo: 'o-459', title: 'Headphones', description: 'Premium audio experience', bookingDate: getRandomDate(), deliveryTime: '3 days', status: 'In Transit'},
-    {orderNo: 'o-460', title: 'Camera', description: 'High-resolution digital camera', bookingDate: getRandomDate(), deliveryTime: '5 days', status: 'Cancel'},
-    {orderNo: 'o-461', title: 'Tablet', description: 'Portable computing device', bookingDate: getRandomDate(), deliveryTime: '2 days', status: 'In Transit'},
-    {orderNo: 'o-462', title: 'Smart Speaker', description: 'Voice-controlled home assistant', bookingDate: getRandomDate(), deliveryTime: '3 days', status: 'In Transit'}
-
-    // Add more data objects as needed
-];
-function getRandomDate() {
-    const currentDate = new Date();
-    const randomDaysAgo = Math.floor(Math.random() * 30); // Adjust the range as needed
-    currentDate.setDate(currentDate.getDate() - randomDaysAgo);
-
-    // Format the date to a human-readable string
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
-    return currentDate.toLocaleString('en-US', options);
-}
-
-// Function to create table rows dynamically
-var itemsPerPage = 5;
-var totalPages = Math.ceil(exampleData.length / itemsPerPage);
+var orderDataList;
+var itemsPerPage = 10;
+var totalPages;
 var currentPage = 1;
+var start = 1;
+var size = 10; // Assuming this is the default size for the first API call
 
-// Function to create table rows dynamically
 function populateTable() {
     const tbody = document.getElementById('orderTableBody');
     tbody.innerHTML = ''; // Clear existing rows
-    // Calculate the range of items to display for the current page
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentItems = exampleData.slice(startIndex, endIndex);
-    currentItems.forEach(data => {
+    orderDataList.forEach(data => {
         const row = document.createElement('tr');
         row.addEventListener('click', function () {
-            // You can handle the click event here, for example, log the customer's ID
-            window.location.href = `/items/items.html?id=${data.orderNo}`;
+            window.location.href = `/items/items.html?id=${data.id}`;
+            localStorageService.setItem('orderId', data.id);;
         });
-        Object.keys(data).forEach(key => {
+
+        // Define the fields you want to display
+        const fieldsToDisplay = ['orderNo', 'title', 'description', 'bookingDateTime', 'deliverDateTime', 'status'];
+
+        // Create cells for other specified data
+        fieldsToDisplay.forEach(field => {
             const cell = document.createElement('td');
-                if (key === 'status') {
-                    // For the 'status' key, create a custom badge with a click event listener
-                    const badge = document.createElement('span');
-                    badge.textContent = data[key];
-                    badge.classList.add('badge', getStatusBadgeClass(data[key]));
-                    cell.appendChild(badge);
-                } else {
-                    // For other keys, create regular cells
-                    cell.textContent = data[key];
-                }
-                row.appendChild(cell);
-            });
+            if (field === 'status') {
+                const badge = document.createElement('span');
+                badge.textContent = data[field];
+                badge.classList.add('badge', getStatusBadgeClass(data[field]));
+                cell.appendChild(badge);
+            } else {
+                cell.textContent = data[field];
+            }
+            row.appendChild(cell);
+        });
+
         tbody.appendChild(row);
     });
 }
-function navigateBackToCustomers() {
-    window.location.href = '/customers/customer.html';
-}
+
 
 function getStatusBadgeClass(status) {
     switch (status.toLowerCase()) {
-            case 'delivered':
-                return 'text-bg-success';
-            case 'cancel':
-                return 'text-bg-danger';
-            case 'in transit':
-                return 'text-bg-warning';
-            default:
-                return 'text-bg-secondary';
+        case 'shipped':
+        case 'delivered':
+            return 'text-bg-success';
+        case 'Cancel':
+            return 'text-bg-danger';
+        case 'active':
+        case 'pending':
+            return 'text-bg-secondary';
+        default:
+            return 'text-bg-warning';
     }
 }
+
 function searchByName(searchTerm) {
     const rows = document.querySelectorAll('#orderTableBody tr');
     let hasMatch = false;
@@ -80,45 +61,180 @@ function searchByName(searchTerm) {
 
         if (itemName.includes(searchTerm.toLowerCase())) {
             row.style.display = '';
-            hasMatch = true; // Show the row if the name matches the search term
+            hasMatch = true;
         } else {
-            row.style.display = 'none'; // Hide the row if the name does not match
+            row.style.display = 'none';
         }
     });
     const noDataMessage = document.getElementById('noDataFound');
+    const pagination = document.getElementById('paginationView');
     if (hasMatch) {
-        noDataMessage.style.display = 'none'; // Hide the message if there is a match
+        noDataMessage.style.display = 'none';
+        pagination.style.display = 'block';
     } else {
-        noDataMessage.style.display = 'block'; // Show the message if there is no match
+        noDataMessage.style.display = 'block';
+        pagination.style.display = 'none';
     }
 }
+
 function generatePagination() {
     var paginationElement = document.getElementById("pagination");
     paginationElement.innerHTML = '';
-    // Add "Previous" button
     paginationElement.innerHTML += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + (currentPage - 1) + ')" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
-    // Add page numbers
     for (var i = 1; i <= totalPages; i++) {
         paginationElement.innerHTML += '<li class="page-item ' + (currentPage === i ? 'active' : '') + '"><a class="page-link" href="#" onclick="changePage(' + i + ')">' + i + '</a></li>';
     }
-    // Add "Next" button
     paginationElement.innerHTML += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + (currentPage + 1) + ')" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
 }
 
 function changePage(page) {
     if (page >= 1 && page <= totalPages) {
         currentPage = page;
-        populateTable();
-        generatePagination();
-
-        // Add logic here to fetch and display data for the new page
-        // You can make an AJAX request to load the content dynamically
+        this.start = (currentPage - 1) * itemsPerPage + 1;
+        getOrdersData();
+    }
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.value = '';
+        searchByName('');
     }
 }
-// Call the function to populate the table when the window has finished loading
+
+function logout() {
+    localStorage.clear();
+    window.location.href = '/auth/login/login.html';
+}
+
+function getOrdersData(comingId) {
+    apiService.getOrders(start, size, comingId)
+        .then(response => {
+            if (response.status == 'failed') {
+                console.log(response.message);
+                showToast(response.message, 'danger');
+            } else {
+                orderDataList = response.data.orders;
+                totalPages = Math.ceil(response.data.totalData / itemsPerPage);
+                populateTable();
+                generatePagination();
+            }
+        })
+        .catch(error => {
+            showToast(error.message, 'danger');
+        });
+}
+
+function showToast(message, type) {
+    const toastContainer = document.createElement('div');
+    toastContainer.className = `toast align-items-center text-white border-0 position-absolute top-0 start-50 translate-middle-x bg-${type}`;
+    toastContainer.setAttribute('role', 'alert');
+    toastContainer.setAttribute('aria-live', 'assertive');
+    toastContainer.setAttribute('aria-atomic', 'true');
+    toastContainer.style.top = '5px';
+
+    const toastContent = document.createElement('div');
+    toastContent.className = 'd-flex';
+
+    const toastBody = document.createElement('div');
+    toastBody.className = 'toast-body';
+    toastBody.textContent = message;
+
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'btn-close btn-close-white me-2 m-auto';
+    closeButton.setAttribute('data-bs-dismiss', 'toast');
+    closeButton.setAttribute('aria-label', 'Close');
+
+    toastContent.appendChild(toastBody);
+    toastContent.appendChild(closeButton);
+    toastContainer.appendChild(toastContent);
+
+    document.body.appendChild(toastContainer);
+
+    const bootstrapToast = new bootstrap.Toast(toastContainer);
+    bootstrapToast.show();
+
+    setTimeout(() => {
+        bootstrapToast.hide();
+    }, 3000);
+}
+function navigateBackToCustomers() {
+    window.location.href = '/customers/customer.html';
+}
+async function handleFileUpload(e) {
+    const fileInput = e.target;
+    let functionParam = {
+        userId: userDetails.id
+    }
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('folder', 'public/images');
+    formData.append('makePublic', true);
+    formData.append('functionName', 'AddUserImage');
+    formData.append('functionParam', JSON.stringify(functionParam));
+    try {
+        // Assuming you have an apiService with an uploadImage method
+        const response = await apiService.uploadImage(formData);
+
+        // Update the image source if the upload is successful
+        if (response) {
+            const profilePic = document.getElementById('profilePic');
+            const profileIcon = document.getElementById('profileImg');
+            const newImageUrl = response.pictureUrl; // Replace with the actual key in the response
+            profilePic.src = newImageUrl;
+            profileIcon.src = newImageUrl
+        } else {
+            showToast(response.message, 'danger');
+        }
+    } catch (error) {
+        showToast(error.message, 'danger');
+    }
+}
+function logout() {
+    localStorage.clear();
+    window.location.href = '/auth/login/login.html';
+}
+function getUserDetail(comingId) {
+    apiService.getUserDetail(comingId)
+        .then(response => {
+            if (response.status == 'failed') {
+                console.log(response.message);
+                showToast(response.message, 'danger');
+            } else {
+                updateProfilePictures(response.data[0])
+            }
+        })
+        .catch(error => {
+            showToast(error.message, 'danger');
+        });
+}
+function updateProfilePictures(response) {
+    const profilePic = document.getElementById('profilePic');
+    const profileIcon = document.getElementById('profileImg');
+    const newImageUrl = response.pictureUrl; // Replace with the actual key in the response
+    profilePic.src = newImageUrl;
+    profileIcon.src = newImageUrl
+}
 window.onload = function () {
     const noDataMessage = document.getElementById('noDataFound');
-    noDataMessage.style.display = 'none'; // Hide the message if there is a match
-    populateTable();
-    generatePagination();
+    noDataMessage.style.display = 'none';
+    userDetails = JSON.parse(localStorageService.getItem('userDetail'))
+    if (userDetails && userDetails.firstName) {
+        document.getElementById('userName').innerText = userDetails.firstName;
+    }
+    if (userDetails && userDetails.firstName && userDetails.lastName) {
+        document.getElementById('firstNameInput').value = userDetails.firstName;
+        document.getElementById('lastNameInput').value = userDetails.lastName;
+    }
+    const id = window.location.href.split('=').reverse()[0]
+    if (id.includes('=')) {
+        getOrdersData(id);
+    }
+    else {
+        const idFromLocalStorage = localStorage.getItem('customerId');
+        getOrdersData(idFromLocalStorage);
+    }
+    var userIdAsString = userDetails.id.toString();
+
+    // Now, you can pass userIdAsString to the getUserDetail function
+    getUserDetail(userIdAsString);
 };

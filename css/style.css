@@ -1,4 +1,4 @@
-.auth-card{
+.auth-card {
     max-width: 540px;
     margin: 0 auto;
     position: absolute;
@@ -12,13 +12,13 @@
     background-color: #fff;
 }
 
-@media (max-width:560px){
-    .auth-card{
+@media (max-width:560px) {
+    .auth-card {
         width: 100%;
     }
 }
 
-.auth-bg{
+.auth-bg {
     background-image: url('/assets/bg.jpg');
     background-repeat: no-repeat;
     display: block;
@@ -27,7 +27,8 @@
     background-size: cover;
     filter: blur(1px) brightness(70%);
 }
-.auth-card input:focus{
+
+.auth-card input:focus {
     box-shadow: none !important;
 }
 
@@ -36,37 +37,74 @@
     left: -150px !important;
 }
 
-.navbar .dropdown-toggle:empty::after{
+.navbar .dropdown-toggle:empty::after {
     display: none !important;
 }
-.dropdown-menu i{
+
+.dropdown-menu i {
     width: 20px;
 }
-.img-dimensions{
+
+.img-dimensions {
     height: 40px;
     width: 40px;
     object-fit: cover;
 }
 
-.line-items table{
+.line-items table {
     vertical-align: middle;
 }
-table tr{
+
+table tr {
     white-space: nowrap;
     cursor: pointer;
 }
 
-.badge{
+.badge {
     width: 100px !important;
 }
-.navigation{
+
+.navigation {
     font-size: 13px;
     cursor: pointer;
 }
+
 .btn-primary {
     background-color: #2D88D4 !important;
     border-color: #2D88D4 !important;
-    &:hover{
+
+    &:hover {
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     }
+}
+
+.profile-avatar img {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #f3f3f3;
+    border-radius: 50%;
+
+}
+
+.edit-option {
+    background-color: #ffc107;
+    padding: 8px;
+    position: absolute;
+    bottom: 20px;
+    right: 160px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    object-fit: cover;
 }
