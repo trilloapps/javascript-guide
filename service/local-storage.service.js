@@ -1,15 +1,20 @@
+// LocalStorageService class definition
 class LocalStorageService {
-    getItem(key) {
+  // Method to get an item from local storage by key
+  getItem(key) {
       return localStorage.getItem(key);
-    }
-  
-    setItem(key, value) {
-      localStorage.setItem(key, value);
-    }
-  
-    removeItem(key) {
-      localStorage.removeItem(key);
-    }
   }
-  
-  const localStorageService = new LocalStorageService();
+
+  // Method to set an item in local storage with a key and value
+  setItem(key, value) {
+      localStorage.setItem(key, value);
+  }
+
+  // Method to remove an item from local storage by key
+  removeItem(key) {
+      localStorage.removeItem(key);
+  }
+}
+
+// Create an instance of LocalStorageService
+const localStorageService = new LocalStorageService();

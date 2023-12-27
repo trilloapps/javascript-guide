@@ -1,3 +1,4 @@
+// Variables for item data, pagination, and page information
 var itemsDataList;
 var itemsPerPage = 10;
 var totalPages;
@@ -5,37 +6,46 @@ var currentPage = 1;
 var start = 1;
 var size = 10; // Assuming this is the default size for the first API call
 
+// Function to populate the table with item data
 function populateTable() {
     const tbody = document.getElementById('itemsTableBody');
     tbody.innerHTML = ''; // Clear existing rows
 
     itemsDataList.forEach(data => {
         const row = document.createElement('tr');
+        // Event listener to navigate to item details page on row click
         row.addEventListener('click', function () {
-            window.location.href = `/item-details/item-details.html?id=${data.id}`;
+            window.location.href = `/app/item-details/item-details.html?id=${data.id}`;
             localStorageService.setItem('itemId', data.id);
         });
 
+        // Create and append cells for image and name
         const imageAndNameCell = createImageAndNameCell(data);
         row.appendChild(imageAndNameCell);
 
+        // Fields to display in the table
         const fieldsToDisplay = ['itemDescription', 'itemCode', 'weight', 'quantity'];
+        // Create and append cells for other fields
         fieldsToDisplay.forEach(field => {
             const cell = createTableCell(data[field]);
             row.appendChild(cell);
         });
 
+        // Append the row to the table body
         tbody.appendChild(row);
     });
 }
 
+// Function to create cell for image and name
 function createImageAndNameCell(data) {
     const imageAndNameCell = document.createElement('td');
     imageAndNameCell.classList.add('d-flex', 'gap-2', 'align-items-center');
 
-    const image = createImageElement('https://currenwatches.com.pk/cdn/shop/products/wefew.jpg?v=1699506412');
+    // Create and append image element
+    const image = createImageElement(data.picture);
     imageAndNameCell.appendChild(image);
 
+    // Create and append name span
     const nameSpan = document.createElement('span');
     nameSpan.textContent = data.itemName;
     imageAndNameCell.appendChild(nameSpan);
@@ -43,6 +53,7 @@ function createImageAndNameCell(data) {
     return imageAndNameCell;
 }
 
+// Function to create image element
 function createImageElement(src) {
     const image = document.createElement('img');
     image.src = src;
@@ -51,14 +62,14 @@ function createImageElement(src) {
     return image;
 }
 
+// Function to create a table cell with text content
 function createTableCell(text) {
     const cell = document.createElement('td');
     cell.textContent = text;
     return cell;
 }
 
-
-
+// Function to search items by name and filter the table
 function searchByName(searchTerm) {
     const rows = document.querySelectorAll('#itemsTableBody tr');
     let hasMatch = false;
@@ -67,6 +78,7 @@ function searchByName(searchTerm) {
         const nameCell = row.querySelector('td:nth-child(1)');
         const itemName = nameCell.textContent.toLowerCase();
 
+        // Show or hide rows based on the search term
         if (itemName.includes(searchTerm.toLowerCase())) {
             row.style.display = '';
             hasMatch = true;
@@ -75,6 +87,7 @@ function searchByName(searchTerm) {
         }
     });
 
+    // Show or hide the no data message and pagination based on search results
     const noDataMessage = document.getElementById('noDataFound');
     const pagination = document.getElementById('paginationView');
 
@@ -87,6 +100,7 @@ function searchByName(searchTerm) {
     }
 }
 
+// Function to generate pagination links
 function generatePagination() {
     var paginationElement = document.getElementById("pagination");
     paginationElement.innerHTML = '';
@@ -97,6 +111,7 @@ function generatePagination() {
     paginationElement.innerHTML += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + (currentPage + 1) + ')" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
 }
 
+// Function to handle page change in pagination
 function changePage(page) {
     if (page >= 1 && page <= totalPages) {
         currentPage = page;
@@ -110,11 +125,7 @@ function changePage(page) {
     }
 }
 
-function logout() {
-    localStorage.clear();
-    window.location.href = '/auth/login/login.html';
-}
-
+// Function to get item data based on order or from local storage
 function getItemsData(comingId) {
     apiService.getItems(start, size, comingId)
         .then(response => {
@@ -124,6 +135,7 @@ function getItemsData(comingId) {
             } else {
                 itemsDataList = response.data.items;
                 totalPages = Math.ceil(response.data.totalData / itemsPerPage);
+                // Populate the table and generate pagination links
                 populateTable();
                 generatePagination();
             }
@@ -133,15 +145,22 @@ function getItemsData(comingId) {
         });
 }
 
+// Function to navigate back to orders page
 function navigateBackToOrders() {
-    window.location.href = '/orders/orders.html';
+    window.location.href = '/app/orders/orders.html';
 }
+
+// Execute these actions when the window has finished loading
 window.onload = function () {
+    // Check if the user is authenticated
+    checkAccessToken();
     const noDataMessage = document.getElementById('noDataFound');
     noDataMessage.style.display = 'none';
 
+    // Get the order or item ID from the URL
     const id = window.location.href.split('=').reverse()[0];
 
+    // Check if the ID is for an order or an item and call the corresponding function
     if (id.includes('=')) {
         getOrdersData(id);
     } else {
