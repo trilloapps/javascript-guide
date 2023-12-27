@@ -65,8 +65,17 @@ function createImageElement(src) {
 // Function to create a table cell with text content
 function createTableCell(text) {
     const cell = document.createElement('td');
-    cell.textContent = text;
+    const truncatedText = truncateText(text, 60);
+    cell.textContent = truncatedText;
     return cell;
+}
+// Function to truncate a table cell 
+function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    } else {
+        return text;
+    }
 }
 
 // Function to search items by name and filter the table
