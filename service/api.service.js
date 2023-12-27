@@ -1,6 +1,22 @@
 // api.service.js
 
 // ApiService class definition
+
+
+
+const loader = document.getElementById('loader');
+const nonLoader = document.getElementById('non-loader');
+
+// Now you can use `loader` and `nonLoader` anywhere in your script
+function showLoader() {
+  loader.style.display = 'flex';
+}
+
+function hideLoader() {
+  loader.style.display = 'none';
+  nonLoader.style.display = 'block';
+}
+
 class ApiService {
   constructor() {
     // Base URL for the API
@@ -20,7 +36,6 @@ class ApiService {
   login(j_username, j_password) {
     const endpoint = '/ajaxLogin';
     const url = this.apiUrl + endpoint;
-
     // Clone headers and remove 'Authorization' for login request
     const headers = Object.assign({}, this.headers);
     delete headers.Authorization;
@@ -39,7 +54,6 @@ class ApiService {
     const url = this.apiUrl + endpoint;
     const headers = this.headers;
     const payload = { userId };
-
     // Perform request to get user details
     return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
       .then(response => response.json())
@@ -52,11 +66,23 @@ class ApiService {
     const url = this.apiUrl + endpoint;
     const headers = this.headers;
     const payload = { start, size };
-
+    showLoader()
     // Perform request to get customers
     return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
       .then(response => response.json())
-      .catch(error => console.error('Login Error:', error));
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
   }
 
   // Method to get a list of orders for a customer
@@ -65,11 +91,23 @@ class ApiService {
     const url = this.apiUrl + endpoint;
     const headers = this.headers;
     const payload = { start, size, customerId };
-
+    showLoader()
     // Perform request to get customer orders
     return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
       .then(response => response.json())
-      .catch(error => console.error('Login Error:', error));
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
   }
 
   // Method to get a list of items for an order
@@ -78,11 +116,23 @@ class ApiService {
     const url = this.apiUrl + endpoint;
     const headers = this.headers;
     const payload = { start, size, orderId };
-
+    showLoader()
     // Perform request to get order items
     return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
       .then(response => response.json())
-      .catch(error => console.error('Login Error:', error));
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
   }
 
   // Method to get details of a specific item
@@ -91,11 +141,24 @@ class ApiService {
     const url = this.apiUrl + endpoint;
     const headers = this.headers;
     const payload = { itemId };
-
+    // Show the loader before making the API call
+    showLoader();
     // Perform request to get item details
     return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
       .then(response => response.json())
-      .catch(error => console.error('Login Error:', error));
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
   }
 
   // Method to edit a line item

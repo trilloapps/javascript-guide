@@ -7,42 +7,79 @@ var start = 1;
 var size = 10; // Default size for the first API call
 
 // Function to populate the table with order data
+// Function to populate the table with order data
 function populateTable() {
+    // Get the table body element
     const tbody = document.getElementById('orderTableBody');
-    tbody.innerHTML = ''; // Clear existing rows
+    // Clear existing rows
+    tbody.innerHTML = '';
 
     // Loop through order data to create rows
     orderDataList.forEach(data => {
-        const row = document.createElement('tr');
-        row.addEventListener('click', function () {
-            // Redirect to the items page with the order ID
-            window.location.href = `/app/items/items.html?id=${data.id}`;
-            localStorageService.setItem('orderId', data.id);
-        });
-
-        // Define the fields you want to display
-        const fieldsToDisplay = ['orderNo', 'title', 'description', 'bookingDateTime', 'deliverDateTime', 'status'];
-
-        // Create cells for specified data fields
-        fieldsToDisplay.forEach(field => {
-            const cell = document.createElement('td');
-
-            // Special handling for 'status' field, add badge with appropriate class
-            if (field === 'status') {
-                const badge = document.createElement('span');
-                badge.textContent = data[field];
-                badge.classList.add('badge', getStatusBadgeClass(data[field]));
-                cell.appendChild(badge);
-            } else {
-                cell.textContent = data[field];
-            }
-
-            row.appendChild(cell);
-        });
-
+        const row = createTableRow(data);
+        // Append the created row to the table body
         tbody.appendChild(row);
     });
 }
+
+// Function to create a table row for order data
+function createTableRow(data) {
+    // Create a table row element
+    const row = document.createElement('tr');
+    // Add a click event listener to redirect to the items page
+    row.addEventListener('click', function () {
+        redirectToItemsPage(data.id);
+    });
+
+    // Define the fields to display in the table
+    const fieldsToDisplay = ['orderNo', 'title', 'description', 'bookingDateTime', 'deliverDateTime', 'status'];
+    // Create and append cells for each field
+    fieldsToDisplay.forEach(field => {
+        const cell = createTableCell(field, data);
+        row.appendChild(cell);
+    });
+
+    return row;
+}
+
+// Function to redirect to the items page with the specified order ID
+function redirectToItemsPage(orderId) {
+    window.location.href = `/app/items/items.html?id=${orderId}`;
+    localStorageService.setItem('orderId', orderId);
+}
+
+// Function to create a table cell based on the field and data
+function createTableCell(field, data) {
+    const cell = document.createElement('td');
+
+    if (field === 'bookingDateTime' || field === 'deliverDateTime') {
+        // Check if the field is a timestamp and format it as a short date
+        cell.textContent = formatShortDate(data[field]);
+    } else if (field === 'status') {
+        const badge = createStatusBadge(data[field]);
+        cell.appendChild(badge);
+    } else {
+        cell.textContent = data[field];
+    }
+
+    return cell;
+}
+// Function to format a timestamp as a short date
+function formatShortDate(timestamp) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(timestamp*1000).toLocaleDateString('en-US', options);
+}
+
+// Function to create a status badge element based on the status value
+function createStatusBadge(status) {
+    const badge = document.createElement('span');
+    // Set the text content of the badge to the status value
+    badge.textContent = status;
+    // Add the 'badge' class and determine the appropriate class based on the status
+    badge.classList.add('badge', getStatusBadgeClass(status));
+    return badge;
+}
+
 
 // Function to determine the badge class based on order status
 function getStatusBadgeClass(status) {
