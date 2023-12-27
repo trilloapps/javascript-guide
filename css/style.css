@@ -1,38 +1,45 @@
-.auth-card {
-    max-width: 540px;
+/* Styles for the authentication card */
+.auth-card{
+    max-width: 490px;
     margin: 0 auto;
     position: absolute;
     top: 50%;
     width: 100%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 20px;
+    padding: 30px 20px;
     border: 1px solid #f3f3f3;
     border-radius: 8px;
     background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-@media (max-width:560px) {
+/* Media query for responsiveness */
+@media (max-width: 560px) {
     .auth-card {
         width: 100%;
     }
 }
 
-.auth-bg {
-    background-image: url('/assets/bg.jpg');
+/* Styles for the background image of the authentication page */
+.auth-bg{
+    background-image: url('../assets/bg.jpg');
     background-repeat: no-repeat;
     display: block;
     height: 100vh;
     width: 100vw;
     background-size: cover;
-    filter: blur(1px) brightness(70%);
+    filter: brightness(75%);
 }
-
+.navbar{
+  background-color: #324d90 !important;
+}
+/* Remove box-shadow when an input is focused */
 .auth-card input:focus {
     box-shadow: none !important;
 }
 
-
+/* Navbar styles - adjust dropdown position and visibility of arrow */
 .navbar .dropdown-menu {
     left: -150px !important;
 }
@@ -41,51 +48,59 @@
     display: none !important;
 }
 
+/* Styles for the dropdown menu icons */
 .dropdown-menu i {
     width: 20px;
 }
 
+/* Dimensions for images */
 .img-dimensions {
     height: 40px;
     width: 40px;
     object-fit: cover;
 }
 
+/* Styles for line items in a table */
 .line-items table {
     vertical-align: middle;
 }
 
+/* Styles for table rows */
 table tr {
     white-space: nowrap;
     cursor: pointer;
 }
 
+/* Badge styles */
 .badge {
     width: 100px !important;
 }
 
+/* Navigation link styles */
 .navigation {
     font-size: 13px;
     cursor: pointer;
 }
 
+/* Primary button styles */
 .btn-primary {
-    background-color: #2D88D4 !important;
-    border-color: #2D88D4 !important;
+    background-color: #324d90 !important;
+    border-color: #324d90 !important;
 
     &:hover {
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     }
 }
 
+/* Styles for the profile avatar image */
 .profile-avatar img {
     width: 200px;
     height: 200px;
     border: 1px solid #f3f3f3;
     border-radius: 50%;
-
 }
 
+/* Styles for the edit option icon */
 .edit-option {
     background-color: #ffc107;
     padding: 8px;
@@ -101,6 +116,7 @@ table tr {
     cursor: pointer;
 }
 
+/* Styles for the profile image */
 .profile-img {
     height: 30px;
     width: 30px;
@@ -108,3 +124,13 @@ table tr {
     border: 1px solid #ccc;
     object-fit: cover;
 }
+
+/* Styles for images inside item details */
+.item-details img {
+    width: 100%;
+}
+/* Styles for pagination buttons */
+.active>.page-link, .page-link.active {
+    background-color: #324d90 !important;
+    border-color: #324d90 !important;
+  }
