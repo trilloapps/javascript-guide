@@ -11,6 +11,12 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
+    <!-- Loader -->
+    <div id="loader">
+        <div  class="spinner-border loader" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 <header>
     <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid px-4">
@@ -41,7 +47,7 @@
         </div>
     </nav>
 </header>
-<section class="p-4">
+<section class="p-4" id="non-loader" style="display: none;">
     <!-- Navigation link to go back to customers page -->
     <div class="mb-2 navigation d-inline-block" onClick="navigateBackToCustomers()">
         <i class="fa-solid fa-arrow-turn-down-left me-2"></i> Back to customers

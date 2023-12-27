@@ -10,7 +10,6 @@ let size = 10;
 window.onload = function () {
     // Check access token before proceeding
     checkAccessToken();
-
     // Hide the "No Data Found" message by default
     const noDataMessage = document.getElementById('noDataFound');
     noDataMessage.style.display = 'none';
