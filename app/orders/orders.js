@@ -91,7 +91,7 @@ function getStatusBadgeClass(status) {
         case 'pending':
             return 'text-bg-secondary';
         case 'shipped':
-            return 'text-bg-primary';
+            return 'text-bg-info';
         default:
             return 'text-bg-warning';
     }
