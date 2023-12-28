@@ -35,11 +35,7 @@ function showToast(message, type) {
     const bootstrapToast = new bootstrap.Toast(toastContainer);
     bootstrapToast.show();
     setTimeout(() => {
-
-
         bootstrapToast.hide();
-
-
     }, 3000);
 
     // Automatically hide the toast after 3000 milliseconds (3 seconds)
