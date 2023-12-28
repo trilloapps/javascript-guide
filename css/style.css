@@ -33,6 +33,9 @@
 }
 .navbar{
   background-color: #324d90 !important;
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }
 /* Remove box-shadow when an input is focused */
 .auth-card input:focus {
@@ -128,11 +131,19 @@ table tr {
 /* Styles for images inside item details */
 .item-details img {
     width: 100%;
+    object-fit: contain;
 }
 /* Styles for pagination buttons */
 .active>.page-link, .page-link.active {
     background-color: #324d90 !important;
     border-color: #324d90 !important;
+    color: #fff !important;
+  }
+  .page-link{
+    color: #324d90 !important;
+  }
+  .page-link:focus{
+    box-shadow: none !important;
   }
   .loader {
     position: fixed;
@@ -141,4 +152,12 @@ table tr {
     color: #324d90;
     /* transform: translate(-50%,-50%); */
   }
-  
+  .toast{
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .form-control:focus{
+    box-shadow: none !important;
+  }
