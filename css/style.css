@@ -31,11 +31,12 @@
     background-size: cover;
     filter: brightness(75%);
 }
-.navbar{
-  background-color: #324d90 !important;
-  position: sticky;
-  top: 0;
-  z-index: 5;
+header{
+    padding: 10px 20px !important;
+    background-color: #324d90 !important;
+    position: sticky;
+    top: 0;
+    z-index: 5;
 }
 /* Remove box-shadow when an input is focused */
 .auth-card input:focus {
@@ -53,7 +54,7 @@
 
 /* Styles for the dropdown menu icons */
 .dropdown-menu i {
-    width: 20px;
+    width: 30px;
 }
 
 /* Dimensions for images */
@@ -109,7 +110,7 @@ table tr {
     padding: 8px;
     position: absolute;
     bottom: 20px;
-    right: 160px;
+    right: 140px;
     border-radius: 50%;
     width: 35px;
     height: 35px;
