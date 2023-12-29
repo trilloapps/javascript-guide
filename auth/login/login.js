@@ -17,6 +17,13 @@ function clearValidationMessage() {
     userIdError.innerText = "";
     passwordError.innerText = "";
 }
+// Check if the pressed key is Enter (key code 13)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      // Call the LoginSubmitForm() function
+      LoginSubmitForm();
+    }
+  });
 
 // Validate user input
 function validateInputs() {

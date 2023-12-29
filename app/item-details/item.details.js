@@ -3,6 +3,18 @@ function navigateBackToItems() {
     window.location.href = '/app/items/items.html';
 }
 
+// Add an event listener to the input element
+document.getElementById('itemQuantity1').addEventListener('input', function(event) {
+    // Get the input value
+    let inputValue = event.target.value;
+
+    // Remove non-numeric characters
+    inputValue = inputValue.replace(/[^0-9]/g, '');
+
+    // Set the filtered value back to the input
+    event.target.value = inputValue;
+});
+
 // Function to get item details using the API service
 function getItemsDetails(comingId) {
     apiService.getItemDetails(comingId)
