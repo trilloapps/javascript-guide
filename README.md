@@ -1,19 +1,20 @@
 # SampleApp - Order Management Application
 
-Welcome to SampleApp, a straightforward yet powerful Order Management Application crafted with JavaScript and HTML.
-This application empowers users to efficiently manage customers, orders, and line items through an intuitive
-and user-friendly interface.
+SampleApp is a robust Order Management Application meticulously designed using JavaScript and HTML.
+This powerful tool empowers users with an intuitive interface for streamlined management of customers,
+orders, and line items. With a focus on efficiency and user-friendliness, SampleApp provides a seamless
+experience, ensuring effective control and organization of essential business processes.
 
 
 ## Clone the Repository
 Start by cloning the repository using the following command:
 
-git clone <repository-url>
+git clone repository-url
 
 ## Open the project in Visual Studio Code:
 Navigate to the project directory and open it in Visual Studio Code with the following commands:
 
-cd <project-directory>
+cd project-directory
 code .
 
 
@@ -26,9 +27,27 @@ Line Item Editing: Enables users to seamlessly view and edit line items within a
 
 ## Running the Application
 
-Open the index.html file in a web browser.
-Navigate to the project directory.
-Double-click the index.html file or use the browser's "Open File" option.
+### Using an HTTP Server:
+
+Start by installing a simple HTTP server,Node.js's http-server module.
+Navigate to the project directory in the command line.
+Launch the server with the appropriate command (e.g.,  http-server ).
+Open a web browser and go to the provided URL (usually http://localhost:8000).
+
+### Double-clicking the index.html File:
+
+Navigate to the project directory using a file explorer.
+Locate the index.html file in the project directory.
+Double-click on the index.html file, and it will open in the default web browser.
+This method is straightforward but may not support certain features that require a server environment.
+
+### Using a Live Server Extension:
+
+If you are using a code editor like Visual Studio Code, you can install a Live Server extension.
+Open the project in Visual Studio Code.
+Right-click on the index.html file and select the "Open with Live Server" option.
+The extension will launch a local server and automatically open the application in your default web browser.
+This method provides a more dynamic development environment with live reloading.
 
 ## Additional Features
 
