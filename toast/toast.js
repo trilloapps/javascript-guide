@@ -2,11 +2,10 @@
 function showToast(message, type) {
     // Create a container for the toast
     const toastContainer = document.createElement('div');
-    toastContainer.className = `toast align-items-center text-white border-0 position-absolute top-0 start-50 translate-middle-x bg-${type}`;
+    toastContainer.className = `toast align-items-center text-white border-0  bg-${type}`;
     toastContainer.setAttribute('role', 'alert');
     toastContainer.setAttribute('aria-live', 'assertive');
     toastContainer.setAttribute('aria-atomic', 'true');
-    toastContainer.style.top = '5px';
 
     // Create a div for the toast content
     const toastContent = document.createElement('div');
@@ -35,9 +34,10 @@ function showToast(message, type) {
     // Create a Bootstrap Toast instance and show it
     const bootstrapToast = new bootstrap.Toast(toastContainer);
     bootstrapToast.show();
-
-    // Automatically hide the toast after 3000 milliseconds (3 seconds)
     setTimeout(() => {
         bootstrapToast.hide();
     }, 3000);
+
+    // Automatically hide the toast after 3000 milliseconds (3 seconds)
+   
 }

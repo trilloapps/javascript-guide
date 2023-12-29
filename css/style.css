@@ -31,8 +31,12 @@
     background-size: cover;
     filter: brightness(75%);
 }
-.navbar{
-  background-color: #324d90 !important;
+header{
+    padding: 10px 20px !important;
+    background-color: #324d90 !important;
+    position: sticky;
+    top: 0;
+    z-index: 5;
 }
 /* Remove box-shadow when an input is focused */
 .auth-card input:focus {
@@ -50,7 +54,7 @@
 
 /* Styles for the dropdown menu icons */
 .dropdown-menu i {
-    width: 20px;
+    width: 30px;
 }
 
 /* Dimensions for images */
@@ -106,7 +110,7 @@ table tr {
     padding: 8px;
     position: absolute;
     bottom: 20px;
-    right: 160px;
+    right: 140px;
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -128,11 +132,19 @@ table tr {
 /* Styles for images inside item details */
 .item-details img {
     width: 100%;
+    object-fit: contain;
 }
 /* Styles for pagination buttons */
 .active>.page-link, .page-link.active {
     background-color: #324d90 !important;
     border-color: #324d90 !important;
+    color: #fff !important;
+  }
+  .page-link{
+    color: #324d90 !important;
+  }
+  .page-link:focus{
+    box-shadow: none !important;
   }
   .loader {
     position: fixed;
@@ -141,4 +153,12 @@ table tr {
     color: #324d90;
     /* transform: translate(-50%,-50%); */
   }
-  
+  .toast{
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .form-control:focus{
+    box-shadow: none !important;
+  }
