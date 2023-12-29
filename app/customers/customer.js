@@ -39,7 +39,7 @@ function populateTable() {
                 // Create a badge for status field
                 const badge = document.createElement('span');
                 badge.textContent = data[field];
-                badge.classList.add('badge', getStatusBadgeClass(data[field]));
+                badge.classList.add('badge','text-capital', getStatusBadgeClass(data[field]));
                 cell.appendChild(badge);
             } else {
                 // Display other fields as text content

@@ -76,7 +76,7 @@ function createStatusBadge(status) {
     // Set the text content of the badge to the status value
     badge.textContent = status;
     // Add the 'badge' class and determine the appropriate class based on the status
-    badge.classList.add('badge', getStatusBadgeClass(status));
+    badge.classList.add('badge','text-capital', getStatusBadgeClass(status));
     return badge;
 }
 
