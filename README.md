@@ -1,10 +1,26 @@
-# SampleApp - Order Management Application
+# JavaScript Order Management App
 
-SampleApp is a robust Order Management Application meticulously designed using JavaScript and HTML.
-This powerful tool empowers users with an intuitive interface for streamlined management of customers,
-orders, and line items. With a focus on efficiency and user-friendliness, SampleApp provides a seamless
-experience, ensuring effective control and organization of essential business processes.
+## Introduction
 
+Welcome to the JavaScript Order Management App! This application is designed to assist in managing customer orders efficiently. It provides a user-friendly interface to view customer details, their orders, and individual items within each order.
+
+## Features
+
+1. **Customer List:**
+   - Upon launching the app, you will be presented with a list of customers.
+   - Clicking on a customer's name will trigger the retrieval and display of their orders.
+
+2. **Order Details:**
+   - Once a customer is selected, the app fetches and displays a list of orders associated with that customer.
+   - Each order contains multiple items, providing a comprehensive overview of the customer's transactions.
+
+3. **Item Details:**
+   - Clicking on a specific order reveals individual items within that order.
+   - Detailed information about each item, such as product name, quantity, and price, is displayed.
+
+## Getting Started
+
+To run the JavaScript Order Management App on your local machine, follow these steps:
 
 ## Clone the Repository
 Start by cloning the repository using the following command:

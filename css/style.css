@@ -32,7 +32,6 @@
     filter: brightness(75%);
 }
 header{
-    padding: 10px 0 !important;
     background-color: #324d90 !important;
     position: sticky;
     top: 0;
