@@ -33,14 +33,14 @@ class ApiService {
   }
 
   // Method to handle user login
-  login(j_username, j_password) {
-    const endpoint = '/ajaxLogin';
+  login(userId, password) {
+    const endpoint = '/_preauthsvc/user/authenticate';
     const url = this.apiUrl + endpoint;
     // Clone headers and remove 'Authorization' for login request
     const headers = Object.assign({}, this.headers);
     delete headers.Authorization;
 
-    const credentials = { j_username, j_password };
+    const credentials = { userId, password };
 
     // Perform login request
     return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(credentials) })
