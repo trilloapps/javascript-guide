@@ -14,7 +14,7 @@ function getUserDetail(comingId) {
             if (response.status === 'failed') {
                 showToast(response.message, 'danger');
             } else {
-                updateProfilePictures(response.data[0]);
+                updateProfilePictures(response.data);
             }
         })
         .catch(error => {
@@ -31,7 +31,7 @@ async function handleFileUpload(e) {
     const formData = new FormData();
     formData.append('file', fileInput.files[0]);
     formData.append('folder', 'public/images');
-    formData.append('makePublic', true);
+    formData.append('makePublic', false);
     formData.append('functionName', 'AddUserImage');
     formData.append('functionParam', JSON.stringify(functionParam));
 
@@ -39,7 +39,8 @@ async function handleFileUpload(e) {
         const response = await apiService.uploadImage(formData);
 
         if (response) {
-            updateProfilePictures(response);
+            const userIdAsString = userDetails.id.toString();
+            getUserDetail(userIdAsString)
         } else {
             showToast(response.message, 'danger');
         }
