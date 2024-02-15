@@ -20,7 +20,7 @@ function hideLoader() {
 class ApiService {
   constructor() {
     // Base URL for the API
-    this.apiUrl = 'https://api.eng-dev-1.trilloapps.com';
+    this.apiUrl = 'https://fe-wb-lab1.kdlabs.dev';
 
     // Default headers for API requests, including authorization token from local storage
     this.headers = {
