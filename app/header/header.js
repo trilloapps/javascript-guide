@@ -53,7 +53,7 @@ async function handleFileUpload(e) {
 function updateProfilePictures(response) {
     const profilePic = document.getElementById('profilePic');
     const profileIcon = document.getElementById('profileImg');
-    const newImageUrl = response.pictureUrl; // Replace with the actual key in the response
+    const newImageUrl = response.pictureUrl!=null?response.pictureUrl:'../../assets/error.png'; // Replace with the actual key in the response
     profilePic.src = newImageUrl;
     profileIcon.src = newImageUrl;
 }
