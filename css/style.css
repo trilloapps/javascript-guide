@@ -165,3 +165,6 @@ table tr {
   .text-capital{
     text-transform: capitalize;
   }
+  .readonly-dim-color {
+    opacity: 0.5; /* Example: Set opacity to make it look dimmed */
+}
