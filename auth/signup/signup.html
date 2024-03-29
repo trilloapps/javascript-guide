@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sample App</title>
+  <!-- Link to custom stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <!-- Link to Bootstrap CSS from CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class='auth-bg'></div>
+  <!-- Container for authentication with shadow effect -->
+  <div id="signupCardContainer" class='auth-card shadow'>
+    <h2 class=' mb-3 text-center'>Signup</h2>
+    <!-- Form group for Email input -->
+    <div class="form-group mb-3">
+      <label class="form-label" for="email">Email</label>
+      <input type="email" class="form-control" id="userEmail" required  placeholder="Email">
+      <small id="emailError" class="text-danger support-text"></small>
+  </div>
+
+  <!-- Form group for Other inputs -->
+  <div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="userId">User ID</label>
+            <input type="text" class="form-control" id="userIdentification" required placeholder="User ID">
+            <small id="userIdError" class="text-danger support-text"></small>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="phone">Mobile Phone</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Mobile Phone">
+            <small id="phoneNumberErr" class="text-danger support-text"></small>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="pass1">New Password</label>
+            <input type="password" class="form-control" id="passinput1" placeholder="New Password">
+            <small id="newp" class="text-danger support-text"></small>
+            <small id="MatchError" class="text-danger support-text"></small>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="pass2">Confirm New Password</label>
+            <input type="password" class="form-control" id="passinput2" placeholder="Confirm New Password">
+            <small id="confirmp" class="text-danger support-text"></small>
+            <small id="MatchErrorPass" class="text-danger support-text"></small>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="firstName">First Name</label>
+            <input type="text" class="form-control" id="userfirstName" required placeholder="First Name">
+            <small id="firstNameError" class="text-danger support-text"></small>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="userlastName" required placeholder="Last Name">
+            <small id="lastNameError" class="text-danger support-text"></small>
+
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="company">Company</label>
+            <input type="text" class="form-control" id="company" placeholder="Company">
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="department">Department</label>
+            <input type="text" class="form-control" id="department" placeholder="Department">
+        </div>
+    </div>
+</div>
+
+    <!-- Form group for the Submit button -->
+    <div class='form-group mb-3 '>
+      <!-- Submit button with primary styling -->
+      <button class='btn btn-primary w-100 mt-1' type="submit" onClick="SignupSubmitForm()">Submit</button>
+  </div>
+
+    <div class="text-center">
+      <p class="mb-0">Already have an account? <a href="/auth/login/login.html">Login</a></p>
+    </div>
+  </div>
+
+  <div id="verificationCardContainer" class='auth-card shadow'>
+    <div>
+        <h2 class="text-primary fw-bold text-center mb-4">We just texted you</h2>
+        <p class="m-0 pb-2 text-center fw-bold">A verification code was sent to your Phone Number</p>
+        <form>
+            <input type="text" placeholder="Enter 6 digit code" class="form-control ">
+            <small id="code" class="text-danger support-text"></small>
+        </form>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary w-100">Submit Code</button>
+        </div>
+        <div class="d-flex align-items-center gap-1 mt-5">
+            <p class="mb-0 fw-bold">Having issues receiving a code? </p><a href="#">Contact support</a>
+        </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JavaScript bundle from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <!-- Custom JavaScript and services -->
+  <script src="../../service/local-storage.service.js"></script>
+  <script src="../../service/api.service.js"></script>
+  <script src="../../toast/toast.js"></script>
+  <script src="./signup.js"></script>
+</body>
+
+</html>
