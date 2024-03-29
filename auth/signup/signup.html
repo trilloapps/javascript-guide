@@ -18,64 +18,78 @@
   <div class='auth-card shadow'>
     <h2 class=' mb-3 text-center'>Signup</h2>
     <!-- Form group for Email input -->
-    <div class='form-group mb-3'>
-      <label class='form-label'>Email</label>
-      <input type='text' class='form-control' placeholder="Email" id='email' />
-      <span id="emailError"></span>
-    </div>
+    <div class="form-group mb-3">
+      <label class="form-label" for="email">Email</label>
+      <input type="email" class="form-control" id="userEmail" required  placeholder="Email">
+      <small id="emailError" class="text-danger support-text"></small>
+  </div>
 
   <!-- Form group for Other inputs -->
   <div class="row">
-    <div class="col-md-6">
-        <div class='form-group mb-3'>
-            <label class='form-label'>User ID</label>
-            <input type='text' class='form-control' placeholder="User ID" id='userId' />
-            <span id="userIdError"></span>
-          </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="userId">User ID</label>
+            <input type="text" class="form-control" id="userIdentification" required placeholder="User ID">
+            <small id="userIdError" class="text-danger support-text"></small>
+        </div>
     </div>
-    <div class="col-md-6">
-        <div class='form-group mb-3'>
-            <label class='form-label'>Mobile Phone</label>
-            <input type='text' class='form-control' placeholder="Mobile Phone" id='mobilePhone' />
-            <span id="mobilePhoneError"></span>
-          </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="phone">Mobile Phone</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Mobile Phone">
+            <small id="phoneNumberErr" class="text-danger support-text"></small>
+        </div>
     </div>
-    <div class="col-md-6">
-        <div class='form-group mb-3'>
-            <label class='form-label'>First Name</label>
-            <input type='text' class='form-control' placeholder="First Name" id='firstName' />
-            <span id="firstNameError"></span>
-          </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="pass1">New Password</label>
+            <input type="password" class="form-control" id="passinput1" placeholder="New Password">
+            <small id="newp" class="text-danger support-text"></small>
+            <small id="MatchError" class="text-danger support-text"></small>
+        </div>
     </div>
-    <div class="col-md-6">
-        <div class='form-group mb-3'>
-            <label class='form-label'>Last Name</label>
-            <input type='text' class='form-control' placeholder="Last Name" id='lastName' />
-            <span id="lastNameError"></span>
-          </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="pass2">Confirm New Password</label>
+            <input type="password" class="form-control" id="passinput2" placeholder="Confirm New Password">
+            <small id="confirmp" class="text-danger support-text"></small>
+            <small id="MatchErrorPass" class="text-danger support-text"></small>
+        </div>
     </div>
-    <div class="col-md-6">
-        <div class='form-group mb-3'>
-            <label class='form-label'>Password</label>
-            <input type='text' class='form-control' placeholder="Password" id='password' />
-            <span id="passwordError"></span>
-          </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="firstName">First Name</label>
+            <input type="text" class="form-control" id="userfirstName" required placeholder="First Name">
+            <small id="firstNameError" class="text-danger support-text"></small>
+        </div>
     </div>
-    <div class="col-md-6">
-        <div class='form-group mb-3'>
-            <label class='form-label'>Confirm Password</label>
-            <input type='text' class='form-control' placeholder="Confirm Password" id='rptPassword' />
-            <span id="rptPasswordError"></span>
-          </div>
-    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="userlastName" required placeholder="Last Name">
+            <small id="lastNameError" class="text-danger support-text"></small>
 
-  </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="company">Company</label>
+            <input type="text" class="form-control" id="company" placeholder="Company">
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-group">
+            <label class="form-label" for="department">Department</label>
+            <input type="text" class="form-control" id="department" placeholder="Department">
+        </div>
+    </div>
+</div>
 
     <!-- Form group for the Submit button -->
     <div class='form-group mb-3 '>
       <!-- Submit button with primary styling -->
-      <button class='btn btn-primary w-100' type="submit" onClick="LoginSubmitForm()">Submit</button>
-    </div>
+      <button class='btn btn-primary w-100 mt-1' type="submit" onClick="SignupSubmitForm()">Submit</button>
+  </div>
 
     <div class="text-center">
       <p class="mb-0">Don't have an account? <a href="/auth/login/login.html">Login</a></p>
@@ -91,8 +105,7 @@
   <script src="../../service/local-storage.service.js"></script>
   <script src="../../service/api.service.js"></script>
   <script src="../../toast/toast.js"></script>
-  <script src="./login.js"></script>
-  <script src="../registration/signup.html"></script>
+  <script src="./signup.js"></script>
 </body>
 
 </html>
