@@ -322,21 +322,18 @@
                         <label for="userid" class="mb-1">User ID</label>
                         <input type="text"  placeholder="User ID" class="form-control input  mb-2" id="userID" readonly>
                     </div>
-                    <div class="row">
-                      <div class="form-group col-lg-6" >
+                      <div class="form-group mb-3" >
                           <label for="newpassword" class="mb-1">New Password</label>
                               <input type="password" placeholder="New Password" class="form-control input" id="pass1">
                               <small id="newError" class="text-danger support-text"></small>
                               <small id="MatchError" class="text-danger support-text"></small>
                       </div>
-                      <div class="form-group col-lg-6" >
+                      <div class="form-group mb-3" >
                           <label for="repeatnewpassword" class="mb-1">Confirm New Password</label>
                           <input type="password" placeholder="Confirm New Password" class="form-control input mb-2" id="pass2">
                           <small id="confirmError" class="text-danger support-text"></small>
                           <small id="MatchError" class="text-danger support-text"></small>
-                          <small id="MatchError" class="text-danger support-text"></small>
                       </div>
-                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closemodal()">Cancel</button>
@@ -384,7 +381,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="phone">Mobile Phone</label>
                                 <input type="text" class="form-control" id="phoneNumber" placeholder="Mobile Phone">
-                                <small id="phoneNumberErr" class="text-danger support-text"></small>
+                                <small id="phoneNumberError" class="text-danger support-text"></small>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -407,15 +404,14 @@
                             <div class="form-group">
                                 <label class="form-label" for="firstName">First Name</label>
                                 <input type="text" class="form-control" id="userfirstName" required placeholder="First Name">
-                                <small id="firstNameError" class="text-danger support-text"></small>
+                                <small id="firstNameErr" class="text-danger support-text"></small>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label class="form-label" for="lastName">Last Name</label>
                                 <input type="text" class="form-control" id="userlastName" required placeholder="Last Name">
-                                <small id="lastNameError" class="text-danger support-text"></small>
-
+                                <small id="lastNameErr" class="text-danger support-text"></small>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">

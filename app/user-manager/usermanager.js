@@ -102,12 +102,12 @@ function openEditModal(data) {
   console.log('Opening Suspend Modal for:', data);
   document.getElementById('userId').value = data.userId;
   document.getElementById('email').value = data.email;
-  document.getElementById('firstName').value = data.firstName!=undefined ? data.firstName : 'N/A';
-  document.getElementById('lastName').value = data.lastName!=undefined ? data.lastName : 'N/A';
+  document.getElementById('firstName').value = data.firstName!=undefined ? data.firstName : '';
+  document.getElementById('lastName').value = data.lastName!=undefined ? data.lastName : '';
   document.getElementById('role').value = data.role;
-  document.getElementById('phone').value = data.mobilePhone!=undefined ? data.mobilePhone : 'N/A';
-  document.getElementById('company').value = data.companyName!=undefined? data.companyName : 'N/A';
-  document.getElementById('department').value = data.deptName!=undefined ? data.deptName : 'N/A';
+  document.getElementById('phone').value = data.mobilePhone!=undefined ? data.mobilePhone : '';
+  document.getElementById('company').value = data.companyName!=undefined? data.companyName : '';
+  document.getElementById('department').value = data.deptName!=undefined ? data.deptName : '';
 
   const readonlyFields = document.querySelectorAll('[readonly]');
 readonlyFields.forEach(field => {
@@ -194,20 +194,36 @@ function saveChanges() {
     const lastNameInput = document.getElementById('lastName');
     const firstNameValue = firstNameInput.value.trim();
     const lastNameValue = lastNameInput.value.trim();
-    // Validate required fields
-  if (!firstNameValue) {
-    firstNameInput.classList.add('is-invalid');
-    return; // Exit function if first name is empty
-  } else {
-    firstNameInput.classList.remove('is-invalid');
-  }
+    // Validate form inputs for required fields
+ if (!userId) {
+  userIdError.textContent = 'User ID is required';
+}
+if (!email) {
+  emailError.textContent = 'Email is required';
+}
+if (!firstName) {
+  firstNameErr.textContent = 'First Name is required';
+}
+if (!lastName) {
+lastNameErr.textContent = 'Last Name is required';
+}
+if (!phoneNo) {
+  phoneNumberError.textContent = 'Phone Number is required';
+}
 
-  if (!lastNameValue) {
-    lastNameInput.classList.add('is-invalid');
-    return; // Exit function if last name is empty
-  } else {
-    lastNameInput.classList.remove('is-invalid');
-  }
+// Validate password length
+if (password.length < 8 ) {
+  newp.textContent = 'Password must be at least 8 characters long';
+}
+if (confirm.length < 8) {
+  confirmp.textContent = 'Confirm Password must be at least 8 characters long';
+}
+
+// password password match
+if (password.length >=8 && confirm.length >=8 && password !== confirm) {
+  MatchErrorPass.textContent = 'Password and confirm password do not match';
+}
+
   
     // Update the data with edited values
     Object.assign(selectedItem, editedData); // Assuming 'data' is the existing user data object
@@ -475,9 +491,9 @@ function newUserModal() {
      const MatchErrorPass = document.getElementById('MatchErrorPass');
      const userIdError = document.getElementById('userIdError');
      const emailError = document.getElementById('emailError');
-     const firstNameError = document.getElementById('firstNameError');
-     const lastNameError = document.getElementById('lastNameError');
-     const phoneNumberErr = document.getElementById('phoneNumberErr');
+     const firstNameErr = document.getElementById('firstNameErr');
+     const lastNameErr = document.getElementById('lastNameErr');
+     const phoneNumberError = document.getElementById('phoneNumberError');
 
      // Set all values to empty strings
 document.getElementById('userIdentification').value = '';
@@ -497,10 +513,10 @@ document.getElementById('phoneNumber').value = '';
     MatchErrorPass.textContent = '';
     userIdError.textContent = '';
     emailError.textContent = '';
-    firstNameError.textContent = '';
-    lastNameError.textContent = '';
+    firstNameErr.textContent = '';
+    lastNameErr.textContent = '';
     userIdError.textContent=''
-    phoneNumberErr.textContent =''
+    phoneNumberError.textContent =''
 }
 function saveNewUserChanges() {
 
@@ -510,9 +526,9 @@ function saveNewUserChanges() {
   const MatchErrorPass = document.getElementById('MatchErrorPass');
   const userIdError = document.getElementById('userIdError');
   const emailError = document.getElementById('emailError');
-  const firstNameError = document.getElementById('firstNameError');
-  const lastNameError = document.getElementById('lastNameError');
-  const phoneNumberErr = document.getElementById('phoneNumberErr');
+  const firstNameErr = document.getElementById('firstNameErr');
+  const lastNameErr = document.getElementById('lastNameErr');
+  const phoneNumberError = document.getElementById('phoneNumberError');
   
 
  const userId = document.getElementById('userIdentification').value;
@@ -536,13 +552,13 @@ function saveNewUserChanges() {
      emailError.textContent = 'Email is required';
  }
  if (!firstName) {
-     firstNameError.textContent = 'First Name is required';
+     firstNameErr.textContent = 'First Name is required';
  }
  if (!lastName) {
-     lastNameError.textContent = 'Last Name is required';
+  lastNameErr.textContent = 'Last Name is required';
  }
  if (!phoneNo) {
-     phoneNumberErr.textContent = 'Phone Number is required';
+     phoneNumberError.textContent = 'Phone Number is required';
  }
 
  // Validate password length
@@ -579,9 +595,9 @@ function saveNewUserChanges() {
      MatchErrorPass.textContent === '' &&
      userIdError.textContent === '' &&
      emailError.textContent === '' &&
-     firstNameError.textContent === '' &&
-     lastNameError.textContent === '' &&
-      phoneNumberErr.textContent ===''
+     firstNameErr.textContent === '' &&
+     lastNameErr.textContent === '' &&
+      phoneNumberError.textContent ===''
  ) {
      apiService.newuser(requestBody)
      .then(response => {
