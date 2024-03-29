@@ -82,6 +82,9 @@ function LoginSubmitForm() {
     }
 }
 
-
-
-
+//Signup Navigation
+document.getElementById("signupLink").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the default behavior of the link
+    console.log("Signup link clicked"); // Log a message to the console
+    window.location.href = "/auth/signup/signup.html"; // Redirect to the signup page
+});

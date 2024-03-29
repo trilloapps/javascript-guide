@@ -71,7 +71,7 @@
       <!-- Heading and Search Input -->
       <h4 class="m-0">User Manager</h4>
       <div class="d-flex gap-2">
-          <input type="text" id="searchInput" class="w-50 form-control" placeholder="Search by Name"
+          <input type="text" id="searchInput" class="custom-width form-control" placeholder="Search by Name"
             onKeyup="searchByName(this.value)">
             <button class="btn btn-primary" onclick="newUserModal()"><i class="fa-solid fa-plus me-2" ></i>Add New User</button>
       </div>
@@ -156,47 +156,47 @@
 
 <!-- HTML for the modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="editModalLabel">Edit User</h5>
         </div>
         <div class="modal-body">
           <form id="editForm">
-            <div class="form-group">
+            <div class="form-group mb-2">
               <label for="userId">User ID</label>
               <input type="text" class="form-control" id="userId" readonly >
             </div>
-            <div class="form-group">
-                <label for="role">Role</label>
+            <div class="form-group mb-2">
+                <label class="form-label" for="role">Role</label>
                 <select class="form-control" id="role">
                   <option value="admin">Admin</option>
                   <option value="user">User</option>
                   <!-- Add more options as needed -->
                 </select>
               </div>
-            <div class="form-group">
-              <label for="email">Email</label>
+            <div class="form-group mb-2">
+              <label class="form-label" for="email">Email</label>
               <input type="email" class="form-control" id="email" readonly >
             </div>
-            <div class="form-group">
-                <label for="email">Mobile Phone</label>
+            <div class="form-group mb-2">
+                <label class="form-label" for="email">Mobile Phone</label>
                 <input type="email" class="form-control" id="phone" >
               </div>
-            <div class="form-group">
-              <label for="firstName">First Name</label>
+            <div class="form-group mb-2">
+              <label class="form-label" for="firstName">First Name</label>
               <input type="text" class="form-control" id="firstName" required >
             </div>
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
+            <div class="form-group mb-2">
+              <label class="form-label" for="lastName">Last Name</label>
               <input type="text" class="form-control" id="lastName" required >
             </div>
-            <div class="form-group">
-                <label for="lastName">Company</label>
+            <div class="form-group mb-2">
+                <label class="form-label" for="lastName">Company</label>
                 <input type="text" class="form-control" id="company" >
               </div>
-              <div class="form-group">
-                <label for="lastName">Department</label>
+              <div class="form-group mb-2">
+                <label class="form-label" for="lastName">Department</label>
                 <input type="text" class="form-control" id="department" >
               </div>
           </form>
@@ -210,7 +210,7 @@
   </div>
 
  <!-- Modal HTML -->
-<div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
     <div class="modal-header">
       <h5 class="modal-title" id="modal-basic-title">Reset Password</h5>
     </div>
@@ -257,10 +257,10 @@
       <button type="button" class="btn btn-outline-secondary" id="cancelButton">Cancel</button>
       <button type="button" class="btn btn-primary" id="submitButton">Submit</button>
     </div>
-  </div>
+  </div> -->
 
   <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="modal-basic-title" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modal-basic-title">Delete</h5>
@@ -284,7 +284,7 @@
   </div>
 
   <div class="modal fade" id="suspendModal" tabindex="-1" aria-labelledby="modal-basic-title" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 id="suspendTextHeading" class="modal-title"></h5>
@@ -305,32 +305,30 @@
   </div>
 
   <div class="modal fade" id="changepassword" tabindex="-1" aria-labelledby="modal-basic-title" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal-basic-title">Reset Password</h5>
             </div>
             <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="userid" class="mb-1">User ID</label>
                         <input type="text"  placeholder="User ID" class="form-control input  mb-2" id="userID" readonly>
                     </div>
-                    <div class="form-group" >
-                        <label for="newpassword" class="mb-1">New Password</label>
-                        <div class="mb-1">
-                            <input type="password" placeholder="New Password" class="form-control input" id="pass1">
-                            <small id="newError" class="text-danger support-text"></small>
-                            <small id="MatchError" class="text-danger support-text"></small>
-                        </div>
-                    </div>
-                    <div class="form-group" >
-                        <label for="repeatnewpassword" class="mb-1">Confirm New Password</label>
-                        <div class="mb-1">
-                        <input type="password" placeholder="Confirm New Password" class="form-control input mb-2" id="pass2">
-                        <small id="confirmError" class="text-danger support-text"></small>
-                        <small id="MatchError" class="text-danger support-text"></small>
-                        <small id="MatchError" class="text-danger support-text"></small>
-                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-6" >
+                          <label for="newpassword" class="mb-1">New Password</label>
+                              <input type="password" placeholder="New Password" class="form-control input" id="pass1">
+                              <small id="newError" class="text-danger support-text"></small>
+                              <small id="MatchError" class="text-danger support-text"></small>
+                      </div>
+                      <div class="form-group col-lg-6" >
+                          <label for="repeatnewpassword" class="mb-1">Confirm New Password</label>
+                          <input type="password" placeholder="Confirm New Password" class="form-control input mb-2" id="pass2">
+                          <small id="confirmError" class="text-danger support-text"></small>
+                          <small id="MatchError" class="text-danger support-text"></small>
+                          <small id="MatchError" class="text-danger support-text"></small>
+                      </div>
                     </div>
             </div>
             <div class="modal-footer">
@@ -343,7 +341,7 @@
 
 
 <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">New User</h5>
@@ -351,16 +349,16 @@
             <div class="modal-body">
                 <form id="editForm">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="userId">User ID</label>
+                                <label class="form-label" for="userId">User ID</label>
                                 <input type="text" class="form-control" id="userIdentification" required placeholder="User ID">
                                 <small id="userIdError" class="text-danger support-text"></small>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="role">Role</label>
+                                <label class="form-label" for="role">Role</label>
                                 <select class="form-control" id="rolenew">
                                     <option value="admin">Admin</option>
                                     <option value="user">User</option>
@@ -368,60 +366,60 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label class="form-label" for="email">Email</label>
                                 <input type="email" class="form-control" id="useremail" required  placeholder="Email">
                                 <small id="emailError" class="text-danger support-text"></small>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="phone">Mobile Phone</label>
+                                <label class="form-label" for="phone">Mobile Phone</label>
                                 <input type="text" class="form-control" id="phoneNumber" placeholder="Mobile Phone">
                                 <small id="phoneNumberErr" class="text-danger support-text"></small>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="pass1">New Password</label>
+                                <label class="form-label" for="pass1">New Password</label>
                                 <input type="password" class="form-control" id="passinput1" placeholder="New Password">
                                 <small id="newp" class="text-danger support-text"></small>
                                 <small id="MatchError" class="text-danger support-text"></small>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="pass2">Confirm New Password</label>
+                                <label class="form-label" for="pass2">Confirm New Password</label>
                                 <input type="password" class="form-control" id="passinput2" placeholder="Confirm New Password">
                                 <small id="confirmp" class="text-danger support-text"></small>
                                 <small id="MatchErrorPass" class="text-danger support-text"></small>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="firstName">First Name</label>
+                                <label class="form-label" for="firstName">First Name</label>
                                 <input type="text" class="form-control" id="userfirstName" required placeholder="First Name">
                                 <small id="firstNameError" class="text-danger support-text"></small>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="lastName">Last Name</label>
+                                <label class="form-label" for="lastName">Last Name</label>
                                 <input type="text" class="form-control" id="userlastName" required placeholder="Last Name">
                                 <small id="lastNameError" class="text-danger support-text"></small>
 
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="company">Company</label>
+                                <label class="form-label" for="company">Company</label>
                                 <input type="text" class="form-control" id="company" placeholder="Company">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="department">Department</label>
+                                <label class="form-label" for="department">Department</label>
                                 <input type="text" class="form-control" id="department" placeholder="Department">
                             </div>
                         </div>
