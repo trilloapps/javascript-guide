@@ -121,6 +121,7 @@ readonlyFields.forEach(field => {
   var editModal = new bootstrap.Modal(document.getElementById('editModal'));
   editModal.show();
 }
+
 function openResetModal(data) {
     console.log('Opening Reset Password Modal for:', data);
     selectedItem = data;
@@ -178,59 +179,68 @@ function handleRowClick(data) {
    
 }
 function saveChanges() {
-    // Collect edited values
-    const editedData = {
+  // Collect edited values
+  const editedData = {
       userId: document.getElementById('userId').value,
       email: document.getElementById('email').value,
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
+      firstName: document.getElementById('firstName').value.trim(),
+      lastName: document.getElementById('lastName').value.trim(),
       role: document.getElementById('role').value,
-      mobilePhone: document.getElementById('phone').value,
+      mobilePhone: document.getElementById('phone').value.trim(),
       companyName: document.getElementById('company').value,
       deptName: document.getElementById('department').value
       // Add more fields as needed
-    };
-    const firstNameInput = document.getElementById('firstName');
-    const lastNameInput = document.getElementById('lastName');
-    const firstNameValue = firstNameInput.value.trim();
-    const lastNameValue = lastNameInput.value.trim();
-    // Validate form inputs for required fields
- if (!userId) {
-  userIdError.textContent = 'User ID is required';
-}
-if (!email) {
-  emailError.textContent = 'Email is required';
-}
-if (!firstName) {
-  firstNameErr.textContent = 'First Name is required';
-}
-if (!lastName) {
-lastNameErr.textContent = 'Last Name is required';
-}
-if (!phoneNo) {
-  phoneNumberError.textContent = 'Phone Number is required';
-}
+  };
 
-// Validate password length
-if (password.length < 8 ) {
-  newp.textContent = 'Password must be at least 8 characters long';
-}
-if (confirm.length < 8) {
-  confirmp.textContent = 'Confirm Password must be at least 8 characters long';
-}
+  // Retrieve error message elements
+  const userIdError = document.getElementById('userIdError');
+  const emailError = document.getElementById('emailError');
+  const firstNameError = document.getElementById('firstNameError');
+  const lastNameError = document.getElementById('lastNameError');
+  const phoneNumberError = document.getElementById('phoneNumberErr');
 
-// password password match
-if (password.length >=8 && confirm.length >=8 && password !== confirm) {
-  MatchErrorPass.textContent = 'Password and confirm password do not match';
-}
+phoneNumberError.textContent = ''
+  // Validate form inputs for required fields
+  if (!editedData.userId) {
+      userIdError.textContent = 'User ID is required';
+  } 
 
-  
-    // Update the data with edited values
-    Object.assign(selectedItem, editedData); // Assuming 'data' is the existing user data object
-  
-    // Call the function to send the updated data via API
-    editUsersData(selectedItem);
+  if (!editedData.email) {
+      emailError.textContent = 'Email is required';
+  } 
+
+  if (!editedData.firstName) {
+      firstNameError.textContent = 'First Name is required';
+  } 
+
+  if (!editedData.lastName) {
+      lastNameError.textContent = 'Last Name is required';
   }
+
+  if (!editedData.mobilePhone) {
+      phoneNumberError.textContent = 'Phone Number is required';
+  } 
+  else if(editedData.mobilePhone.length > 16 || editedData.mobilePhone.length < 12) {
+    phoneNumberError.textContent = 'Phone Number must be between 12 to 16 characters';
+  }
+
+
+  if (
+    userIdError.textContent === '' &&
+    userIdError.textContent === '' &&
+    emailError.textContent === '' &&
+    firstNameError.textContent === '' &&
+    lastNameError.textContent === '' &&
+    phoneNumberError.textContent ===''
+)
+{
+  // Update the data with edited values
+  Object.assign(selectedItem, editedData); // Assuming 'data' is the existing user data object
+
+  // Call the function to send the updated data via API
+  editUsersData(selectedItem);
+}
+}
 
 // Get appropriate CSS class for status badge
 function getStatusBadgeClass(status) {
@@ -424,35 +434,28 @@ function editUsersData(body) {
     const newPasswordError = document.getElementById('newError');
     const confirmPasswordError = document.getElementById('confirmError');
     const passwordMatchError = document.getElementById('MatchError');
+
+    newPasswordError.textContent = '';
+    confirmPasswordError.textContent = '';
+    passwordMatchError.textContent = '';
+
     console.log('New Password:', newPasswordInput);
     console.log('Repeat Password:', repeatPasswordInput);
     // Validate form inputs
     if (newPasswordInput=='') {
       newPasswordError.textContent = 'New password is required';
-      return;
-    } else {
-      newPasswordError.textContent = '';
-    }
+    } 
   
     if (repeatPasswordInput=='') {
       confirmPasswordError.textContent = 'Confirm new password is required';
-      return;
-    } else {
-      confirmPasswordError.textContent = '';
-    }
-    if (newPasswordInput.length < 8 ||repeatPasswordInput.length < 8 ) {
+    } 
+    if ((newPasswordInput.length < 8 && newPasswordInput!= '')  || (repeatPasswordInput.length < 8 && repeatPasswordInput!= '') ) {
         newPasswordError.textContent = 'Password must be at least 8 characters long';
-        return;
-      } else {
-        newPasswordError.textContent = '';
-      }
-  
-    if (newPasswordInput !== repeatPasswordInput) {
+      } 
+
+    if (newPasswordInput !== repeatPasswordInput && newPasswordInput.length === repeatPasswordInput.length ) {
       passwordMatchError.textContent = 'Password and confirm password do not match';
-      return;
-    } else {
-      passwordMatchError.textContent = '';
-    }
+    } 
 
     const resetData = {
         password: newPasswordInput,
@@ -468,7 +471,7 @@ function closemodal() {
     const repeatInput = document.getElementById('pass2');
     const newPasswordError = document.getElementById('newError');
     const confirmPasswordError = document.getElementById('confirmError');
-    const passwordMatchError = document.getElementById('MatchError');
+    const passwordMatchError = document.getElementById('MatchErr');
     
     newInput.value = '';  // Clear the value of the first input field
     repeatInput.value = '';  // Clear the value of the second input field
@@ -560,6 +563,9 @@ function saveNewUserChanges() {
  if (!phoneNo) {
      phoneNumberError.textContent = 'Phone Number is required';
  }
+ else if (phoneNo.length > 16 || phoneNo.length < 12){
+     phoneNumberError.textContent = 'Phone Number must be between 12 to 16 character.';
+ } 
 
  // Validate password length
  if (password.length < 8 ) {

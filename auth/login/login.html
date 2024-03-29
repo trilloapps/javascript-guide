@@ -15,7 +15,7 @@
 <body>
   <div class='auth-bg'></div>
   <!-- Container for authentication with shadow effect -->
-  <div class='auth-card shadow'>
+  <div id="loginCardContainer" class='auth-card shadow'>
     <h2 class=' mb-3 text-center'>Login</h2>
     <!-- Form group for User ID input -->
     <div class='form-group mb-3'>
@@ -39,6 +39,23 @@
 
     <div class="text-center">
       <p class="mb-0">Don't have an account? <a href="" id="signupLink">Signup</a></p>
+    </div>
+  </div>
+
+  <div id="verificationCardContainer" class='auth-card shadow'>
+    <div>
+        <h2 class="text-primary fw-bold text-center mb-4">We just texted you</h2>
+        <p class="m-0 pb-2 text-center fw-bold">A verification code was sent to your Phone Number</p>
+        <form>
+            <input type="text" placeholder="Enter 6 digit code" class="form-control ">
+            <small id="code" class="text-danger support-text"></small>
+        </form>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary w-100">Submit Code</button>
+        </div>
+        <div class="d-flex align-items-center gap-1 mt-5">
+            <p class="mb-0 fw-bold">Having issues receiving a code? </p><a href="#">Contact support</a>
+        </div>
     </div>
   </div>
 

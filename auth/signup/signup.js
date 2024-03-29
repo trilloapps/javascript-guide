@@ -1,3 +1,5 @@
+const verificationCardContainer = document.getElementById('verificationCardContainer').style.display = 'none'
+
 function SignupSubmitForm() {
     const newp = document.getElementById('newp');
     const confirmp = document.getElementById('confirmp');
