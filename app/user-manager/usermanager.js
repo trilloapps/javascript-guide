@@ -102,12 +102,12 @@ function openEditModal(data) {
   console.log('Opening Suspend Modal for:', data);
   document.getElementById('userId').value = data.userId;
   document.getElementById('email').value = data.email;
-  document.getElementById('firstName').value = data.firstName!=undefined ? data.firstName : 'N/A';
-  document.getElementById('lastName').value = data.lastName!=undefined ? data.lastName : 'N/A';
+  document.getElementById('firstName').value = data.firstName!=undefined ? data.firstName : '';
+  document.getElementById('lastName').value = data.lastName!=undefined ? data.lastName : '';
   document.getElementById('role').value = data.role;
-  document.getElementById('phone').value = data.mobilePhone!=undefined ? data.mobilePhone : 'N/A';
-  document.getElementById('company').value = data.companyName!=undefined? data.companyName : 'N/A';
-  document.getElementById('department').value = data.deptName!=undefined ? data.deptName : 'N/A';
+  document.getElementById('phone').value = data.mobilePhone!=undefined ? data.mobilePhone : '';
+  document.getElementById('company').value = data.companyName!=undefined? data.companyName : '';
+  document.getElementById('department').value = data.deptName!=undefined ? data.deptName : '';
 
   const readonlyFields = document.querySelectorAll('[readonly]');
 readonlyFields.forEach(field => {
@@ -121,6 +121,7 @@ readonlyFields.forEach(field => {
   var editModal = new bootstrap.Modal(document.getElementById('editModal'));
   editModal.show();
 }
+
 function openResetModal(data) {
     console.log('Opening Reset Password Modal for:', data);
     selectedItem = data;
@@ -178,43 +179,68 @@ function handleRowClick(data) {
    
 }
 function saveChanges() {
-    // Collect edited values
-    const editedData = {
+  // Collect edited values
+  const editedData = {
       userId: document.getElementById('userId').value,
       email: document.getElementById('email').value,
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
+      firstName: document.getElementById('firstName').value.trim(),
+      lastName: document.getElementById('lastName').value.trim(),
       role: document.getElementById('role').value,
-      mobilePhone: document.getElementById('phone').value,
+      mobilePhone: document.getElementById('phone').value.trim(),
       companyName: document.getElementById('company').value,
       deptName: document.getElementById('department').value
       // Add more fields as needed
-    };
-    const firstNameInput = document.getElementById('firstName');
-    const lastNameInput = document.getElementById('lastName');
-    const firstNameValue = firstNameInput.value.trim();
-    const lastNameValue = lastNameInput.value.trim();
-    // Validate required fields
-  if (!firstNameValue) {
-    firstNameInput.classList.add('is-invalid');
-    return; // Exit function if first name is empty
-  } else {
-    firstNameInput.classList.remove('is-invalid');
+  };
+
+  // Retrieve error message elements
+  const userIdError = document.getElementById('userIdError');
+  const emailError = document.getElementById('emailError');
+  const firstNameError = document.getElementById('firstNameError');
+  const lastNameError = document.getElementById('lastNameError');
+  const phoneNumberError = document.getElementById('phoneNumberErr');
+
+phoneNumberError.textContent = ''
+  // Validate form inputs for required fields
+  if (!editedData.userId) {
+      userIdError.textContent = 'User ID is required';
+  } 
+
+  if (!editedData.email) {
+      emailError.textContent = 'Email is required';
+  } 
+
+  if (!editedData.firstName) {
+      firstNameError.textContent = 'First Name is required';
+  } 
+
+  if (!editedData.lastName) {
+      lastNameError.textContent = 'Last Name is required';
   }
 
-  if (!lastNameValue) {
-    lastNameInput.classList.add('is-invalid');
-    return; // Exit function if last name is empty
-  } else {
-    lastNameInput.classList.remove('is-invalid');
+  if (!editedData.mobilePhone) {
+      phoneNumberError.textContent = 'Phone Number is required';
+  } 
+  else if(editedData.mobilePhone.length > 16 || editedData.mobilePhone.length < 12) {
+    phoneNumberError.textContent = 'Phone Number must be between 12 to 16 characters';
   }
-  
-    // Update the data with edited values
-    Object.assign(selectedItem, editedData); // Assuming 'data' is the existing user data object
-  
-    // Call the function to send the updated data via API
-    editUsersData(selectedItem);
-  }
+
+
+  if (
+    userIdError.textContent === '' &&
+    userIdError.textContent === '' &&
+    emailError.textContent === '' &&
+    firstNameError.textContent === '' &&
+    lastNameError.textContent === '' &&
+    phoneNumberError.textContent ===''
+)
+{
+  // Update the data with edited values
+  Object.assign(selectedItem, editedData); // Assuming 'data' is the existing user data object
+
+  // Call the function to send the updated data via API
+  editUsersData(selectedItem);
+}
+}
 
 // Get appropriate CSS class for status badge
 function getStatusBadgeClass(status) {
@@ -408,35 +434,28 @@ function editUsersData(body) {
     const newPasswordError = document.getElementById('newError');
     const confirmPasswordError = document.getElementById('confirmError');
     const passwordMatchError = document.getElementById('MatchError');
+
+    newPasswordError.textContent = '';
+    confirmPasswordError.textContent = '';
+    passwordMatchError.textContent = '';
+
     console.log('New Password:', newPasswordInput);
     console.log('Repeat Password:', repeatPasswordInput);
     // Validate form inputs
     if (newPasswordInput=='') {
       newPasswordError.textContent = 'New password is required';
-      return;
-    } else {
-      newPasswordError.textContent = '';
-    }
+    } 
   
     if (repeatPasswordInput=='') {
       confirmPasswordError.textContent = 'Confirm new password is required';
-      return;
-    } else {
-      confirmPasswordError.textContent = '';
-    }
-    if (newPasswordInput.length < 8 ||repeatPasswordInput.length < 8 ) {
+    } 
+    if ((newPasswordInput.length < 8 && newPasswordInput!= '')  || (repeatPasswordInput.length < 8 && repeatPasswordInput!= '') ) {
         newPasswordError.textContent = 'Password must be at least 8 characters long';
-        return;
-      } else {
-        newPasswordError.textContent = '';
-      }
-  
-    if (newPasswordInput !== repeatPasswordInput) {
+      } 
+
+    if (newPasswordInput !== repeatPasswordInput && newPasswordInput.length === repeatPasswordInput.length ) {
       passwordMatchError.textContent = 'Password and confirm password do not match';
-      return;
-    } else {
-      passwordMatchError.textContent = '';
-    }
+    } 
 
     const resetData = {
         password: newPasswordInput,
@@ -452,7 +471,7 @@ function closemodal() {
     const repeatInput = document.getElementById('pass2');
     const newPasswordError = document.getElementById('newError');
     const confirmPasswordError = document.getElementById('confirmError');
-    const passwordMatchError = document.getElementById('MatchError');
+    const passwordMatchError = document.getElementById('MatchErr');
     
     newInput.value = '';  // Clear the value of the first input field
     repeatInput.value = '';  // Clear the value of the second input field
@@ -475,9 +494,9 @@ function newUserModal() {
      const MatchErrorPass = document.getElementById('MatchErrorPass');
      const userIdError = document.getElementById('userIdError');
      const emailError = document.getElementById('emailError');
-     const firstNameError = document.getElementById('firstNameError');
-     const lastNameError = document.getElementById('lastNameError');
-     const phoneNumberErr = document.getElementById('phoneNumberErr');
+     const firstNameErr = document.getElementById('firstNameErr');
+     const lastNameErr = document.getElementById('lastNameErr');
+     const phoneNumberError = document.getElementById('phoneNumberError');
 
      // Set all values to empty strings
 document.getElementById('userIdentification').value = '';
@@ -497,112 +516,115 @@ document.getElementById('phoneNumber').value = '';
     MatchErrorPass.textContent = '';
     userIdError.textContent = '';
     emailError.textContent = '';
-    firstNameError.textContent = '';
-    lastNameError.textContent = '';
+    firstNameErr.textContent = '';
+    lastNameErr.textContent = '';
     userIdError.textContent=''
-    phoneNumberErr.textContent =''
+    phoneNumberError.textContent =''
 }
 function saveNewUserChanges() {
 
-     // Reset previous error messages
-     const newp = document.getElementById('newp');
-     const confirmp = document.getElementById('confirmp');
-     const MatchErrorPass = document.getElementById('MatchErrorPass');
-     const userIdError = document.getElementById('userIdError');
-     const emailError = document.getElementById('emailError');
-     const firstNameError = document.getElementById('firstNameError');
-     const lastNameError = document.getElementById('lastNameError');
-     const phoneNumberErr = document.getElementById('phoneNumberErr');
-     
-
-    const userId = document.getElementById('userIdentification').value;
-    const role = document.getElementById('rolenew').value;
-    const email = document.getElementById('useremail').value;
-    const phoneNo = document.getElementById('phoneNumber').value;
-    const password = document.getElementById('passinput1').value;
-    const confirm = document.getElementById('passinput2').value;
-    const firstName = document.getElementById('userfirstName').value;
-    const lastName = document.getElementById('userlastName').value;
-    const company = document.getElementById('company').value;
-    const department = document.getElementById('department').value;
-
-
+  // Reset previous error messages
+  const newp = document.getElementById('newp');
+  const confirmp = document.getElementById('confirmp');
+  const MatchErrorPass = document.getElementById('MatchErrorPass');
+  const userIdError = document.getElementById('userIdError');
+  const emailError = document.getElementById('emailError');
+  const firstNameErr = document.getElementById('firstNameErr');
+  const lastNameErr = document.getElementById('lastNameErr');
+  const phoneNumberError = document.getElementById('phoneNumberError');
   
-    // Validate form inputs for required fields
-    if (!userId) {
-        userIdError.textContent = 'User ID is required';
-    }
-    if (!email) {
-        emailError.textContent = 'Email is required';
-    }
-    if (!firstName) {
-        firstNameError.textContent = 'First Name is required';
-    }
-    if (!lastName) {
-        lastNameError.textContent = 'Last Name is required';
-    }
-    if (!phoneNo) {
-        phoneNumberErr.textContent = 'Phone Number is required';
-    }
 
-    // Validate password length
-    if (password.length < 8 ) {
-        newp.textContent = 'Password must be at least 8 characters long';
-    }
-    if (confirm.length < 8) {
-        confirmp.textContent = 'Confirm Password must be at least 8 characters long';
-    }
-
-    // password password match
-    if (password.length >=8 && confirm.length >=8 && password !== confirm) {
-        MatchErrorPass.textContent = 'Password and confirm password do not match';
-    }
-     // Construct the request body
-     const requestBody = {
-        userId: userId,
-        role: role,
-        email: email,
-        phone: phoneNo,
-        password: password,
-        rptPassword: confirm,
-        firstName: firstName,
-        lastName: lastName,
-        company: company,
-        department: department
-    };
-    console.log(requestBody);
+ const userId = document.getElementById('userIdentification').value;
+ const role = document.getElementById('rolenew').value;
+ const email = document.getElementById('useremail').value;
+ const phoneNo = document.getElementById('phoneNumber').value;
+ const password = document.getElementById('passinput1').value;
+ const confirm = document.getElementById('passinput2').value;
+ const firstName = document.getElementById('userfirstName').value;
+ const lastName = document.getElementById('userlastName').value;
+ const company = document.getElementById('company').value;
+ const department = document.getElementById('department').value;
 
 
-    if (
-        newp.textContent === '' &&
-        confirmp.textContent === '' &&
-        MatchErrorPass.textContent === '' &&
-        userIdError.textContent === '' &&
-        emailError.textContent === '' &&
-        firstNameError.textContent === '' &&
-        lastNameError.textContent === '' &&
-         phoneNumberErr.textContent ===''
-    ) {
-        apiService.newuser(requestBody)
-        .then(response => {
-          if (response.status == 'failed') {
-            console.log(response.message);
-            showToast(response.message, 'danger');
-          } else {
-            showToast(response.message, 'success');
-            const newUserModal = bootstrap.Modal.getInstance(document.getElementById('newUserModal'));
-            if (newUserModal) {
-                newUserModal.hide();
-            }
-            getUsersData();
-          }
-        })
-        .catch(error => {
-          showToast(error.message, 'danger');
-        });
-    }
 
-   
+ // Validate form inputs for required fields
+ if (!userId) {
+     userIdError.textContent = 'User ID is required';
+ }
+ if (!email) {
+     emailError.textContent = 'Email is required';
+ }
+ if (!firstName) {
+     firstNameErr.textContent = 'First Name is required';
+ }
+ if (!lastName) {
+  lastNameErr.textContent = 'Last Name is required';
+ }
+ if (!phoneNo) {
+     phoneNumberError.textContent = 'Phone Number is required';
+ }
+ else if (phoneNo.length > 16 || phoneNo.length < 12){
+     phoneNumberError.textContent = 'Phone Number must be between 12 to 16 character.';
+ } 
+
+ // Validate password length
+ if (password.length < 8 ) {
+     newp.textContent = 'Password must be at least 8 characters long';
+ }
+ if (confirm.length < 8) {
+     confirmp.textContent = 'Confirm Password must be at least 8 characters long';
+ }
+
+ // password password match
+ if (password.length >=8 && confirm.length >=8 && password !== confirm) {
+     MatchErrorPass.textContent = 'Password and confirm password do not match';
+ }
+  // Construct the request body
+  const requestBody = {
+     userId: userId,
+     role: role,
+     email: email,
+     phone: phoneNo,
+     password: password,
+     rptPassword: confirm,
+     firstName: firstName,
+     lastName: lastName,
+     company: company,
+     department: department
+ };
+ console.log(requestBody);
+
+
+ if (
+     newp.textContent === '' &&
+     confirmp.textContent === '' &&
+     MatchErrorPass.textContent === '' &&
+     userIdError.textContent === '' &&
+     emailError.textContent === '' &&
+     firstNameErr.textContent === '' &&
+     lastNameErr.textContent === '' &&
+      phoneNumberError.textContent ===''
+ ) {
+     apiService.newuser(requestBody)
+     .then(response => {
+       if (response.status == 'failed') {
+         console.log(response.message);
+         showToast(response.message, 'danger');
+       } else {
+         showToast(response.message, 'success');
+         const newUserModal = bootstrap.Modal.getInstance(document.getElementById('newUserModal'));
+         if (newUserModal) {
+             newUserModal.hide();
+         }
+         getUsersData();
+       }
+     })
+     .catch(error => {
+       showToast(error.message, 'danger');
+     });
+ }
+
+
 }
 
 
