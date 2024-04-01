@@ -12,10 +12,16 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
+
 <body>
   <div class='auth-bg'></div>
   <!-- Container for authentication with shadow effect -->
+<<<<<<< HEAD:public/auth/signup/signup.html
+  <div  id="signupCardContainer"
+   class='auth-card shadow'>
+=======
   <div id="signupCardContainer" class='auth-card shadow'>
+>>>>>>> development/1.0:auth/signup/signup.html
     <h2 class=' mb-3 text-center'>Signup</h2>
     <!-- Form group for Email input -->
     <div class="form-group mb-3">
@@ -88,7 +94,7 @@
     <!-- Form group for the Submit button -->
     <div class='form-group mb-3 '>
       <!-- Submit button with primary styling -->
-      <button class='btn btn-primary w-100 mt-1' type="submit" onClick="SignupSubmitForm()">Submit</button>
+      <button class='btn btn-primary w-100 mt-1' type="button" onClick="SignupSubmitForm()">Submit</button>
   </div>
 
     <div class="text-center">
@@ -100,6 +106,19 @@
     <div>
         <h2 class="text-primary fw-bold text-center mb-4">We just texted you</h2>
         <p class="m-0 pb-2 text-center fw-bold">A verification code was sent to your Phone Number</p>
+<<<<<<< HEAD:public/auth/signup/signup.html
+        <form id="verificationForm">
+            <input type="text" id="verificationCode" placeholder="Enter 6 digit code" class="form-control">
+            <small id="codeError" class="text-danger support-text"></small>
+            <div class="text-center mt-4">
+                <button class="btn btn-primary w-100" onClick="verifyToken()">Submit Code</button>
+            </div>
+        </form>
+        <div class="d-flex align-items-center gap-1 mt-5">
+            <p class="mb-0 fw-bold">Having issues receiving a code? </p><a href="#">Contact support</a>
+        </div>
+    </div>        
+=======
         <form>
             <input type="text" placeholder="Enter 6 digit code" class="form-control ">
             <small id="code" class="text-danger support-text"></small>
@@ -111,8 +130,8 @@
             <p class="mb-0 fw-bold">Having issues receiving a code? </p><a href="#">Contact support</a>
         </div>
     </div>
+>>>>>>> development/1.0:auth/signup/signup.html
   </div>
-
   <!-- Bootstrap JavaScript bundle from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -122,7 +141,16 @@
   <script src="../../service/local-storage.service.js"></script>
   <script src="../../service/api.service.js"></script>
   <script src="../../toast/toast.js"></script>
-  <script src="./signup.js"></script>
+  <!-- Firebase JavaScript SDK -->
+<script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-auth.js"></script>
+<script    src="./../../firebase.js"></script>
+
+  <script    src="./signup.js"></script>
+  <!-- Add this line before your signup.js script -->
+
+
 </body>
 
 </html>
+<div class="d-flex justify-content-center" id="recaptcha-container-login"></div>

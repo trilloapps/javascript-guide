@@ -73,6 +73,43 @@ Simple and Intuitive Design: SampleApp is intentionally kept simple, emphasizing
 
 Feel free to delve into the codebase to gain a deeper understanding of the Order Management Application's implementation.
 
+
+
+## If you want to run your JavaScript application on localhost:4200
+
+1.Run the following command to install Express.js as a dependency:
+npm install express
+
+2.Create a new JavaScript file (e.g., server.js) in your project directory.
+
+3.Open server.js in your text editor and add the following code
+
+const express = require('express');
+const app = express();
+const path = require('path');
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Start the server
+const PORT = process.env.PORT || 4200;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+4.Create a Public Directory:
+Create a new directory named public in your project directory. This is where you'll put your HTML, CSS, and JavaScript files.
+
+5.Move Your Files:
+
+Move your JavaScript application files (including HTML, CSS, and JavaScript files) to the public directory.
+
+6.Start the Server:
+Open a terminal or command prompt, navigate to your project directory, and run the following command to start the server:
+
+node server.js
+
+
 ## Conclusion
 
 SampleApp serves not only as a practical Order Management Application but also as a robust template for UI documentation.

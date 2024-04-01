@@ -96,32 +96,53 @@ function createDropdownItem(label, onClickHandler) {
 
 // Example modal opening functions (replace with your modal logic)
 function openEditModal(data) {
-    console.log('Company Name:', data.companyName);
-    selectedItem=data
-    // Populate the form fields with user data
+  // Clear error messages
+  clearErrorMessages();
+
+  console.log('Company Name:', data.companyName);
+  selectedItem = data;
+  // Populate the form fields with user data
   console.log('Opening Suspend Modal for:', data);
   document.getElementById('userId').value = data.userId;
   document.getElementById('email').value = data.email;
-  document.getElementById('firstName').value = data.firstName!=undefined ? data.firstName : '';
-  document.getElementById('lastName').value = data.lastName!=undefined ? data.lastName : '';
+  document.getElementById('firstName').value = data.firstName != undefined ? data.firstName : '';
+  document.getElementById('lastName').value = data.lastName != undefined ? data.lastName : '';
   document.getElementById('role').value = data.role;
-  document.getElementById('phone').value = data.mobilePhone!=undefined ? data.mobilePhone : '';
-  document.getElementById('company').value = data.companyName!=undefined? data.companyName : '';
-  document.getElementById('department').value = data.deptName!=undefined ? data.deptName : '';
+  document.getElementById('phone').value = data.mobilePhone != undefined ? data.mobilePhone : '';
+  document.getElementById('company').value = data.companyName != undefined ? data.companyName : '';
+  document.getElementById('department').value = data.deptName != undefined ? data.deptName : '';
 
   const readonlyFields = document.querySelectorAll('[readonly]');
-readonlyFields.forEach(field => {
-    const formGroup = field.closest('.form-group');
-    if (formGroup) {
-        formGroup.classList.add('readonly-dim-color');
-    }
-});
+  readonlyFields.forEach(field => {
+      const formGroup = field.closest('.form-group');
+      if (formGroup) {
+          formGroup.classList.add('readonly-dim-color');
+      }
+  });
 
   // Show the modal
   var editModal = new bootstrap.Modal(document.getElementById('editModal'));
   editModal.show();
 }
 
+<<<<<<< HEAD:public/app/user-manager/usermanager.js
+function clearErrorMessages() {
+  const errorElements = document.querySelectorAll('.text-danger.support-text');
+  errorElements.forEach(element => {
+      element.textContent = '';
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  var editModal = document.getElementById('editModal');
+  if (editModal) {
+      editModal.addEventListener('hidden.bs.modal', function () {
+          clearErrorMessages();
+      });
+  }
+})
+=======
+>>>>>>> development/1.0:app/user-manager/usermanager.js
 function openResetModal(data) {
     console.log('Opening Reset Password Modal for:', data);
     selectedItem = data;

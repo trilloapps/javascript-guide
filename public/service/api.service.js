@@ -330,7 +330,30 @@ class ApiService {
       .then(response => response.json())
       .catch(error => console.error('Login Error:', error));
   }
+  saveSignupDetails(body) {
+    const endpoint = '/_preauthsvc/user/signup';
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    const payload = body;
+    // Show the loader before making the API call
+    // Perform request to get item details
+    return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+  
+  
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
 }
+
+
 
 // Create an instance of ApiService
 const apiService = new ApiService();
