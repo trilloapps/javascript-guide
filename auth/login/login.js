@@ -3,6 +3,7 @@ const userIdInput = document.getElementById('userId');
 const passwordInput = document.getElementById('password');
 const userIdError = document.getElementById('userIdError');
 const passwordError = document.getElementById('passwordError');
+const verificationCardContainer = document.getElementById('verificationCardContainer').style.display = 'none'
 
 // Add text-danger class to error spans for styling
 userIdError.classList.add('text-danger');
@@ -67,6 +68,7 @@ function LoginSubmitForm() {
                     // Store user details and access token in local storage
                     localStorageService.setItem('userDetail', JSON.stringify(response.user));
                     localStorageService.setItem('accessToken', response.accessToken);
+                     document.getElementById('verificationCardContainer').style.display = 'block'
                     // Redirect to customer page on successful login
                     window.location.href = '/app/customers/customer.html';
                 } else {
@@ -82,6 +84,9 @@ function LoginSubmitForm() {
     }
 }
 
-
-
-
+//Signup Navigation
+document.getElementById("signupLink").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the default behavior of the link
+    console.log("Signup link clicked"); // Log a message to the console
+    window.location.href = "/auth/signup/signup.html"; // Redirect to the signup page
+});

@@ -1,13 +1,13 @@
 /* Styles for the authentication card */
-.auth-card{
-    max-width: 490px;
+.auth-card {
+    max-width: 540px;
     margin: 0 auto;
     position: absolute;
     top: 50%;
     width: 100%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 30px 20px;
+    padding: 20px;
     border: 1px solid #f3f3f3;
     border-radius: 8px;
     background-color: #fff;
@@ -165,3 +165,9 @@ table tr {
   .text-capital{
     text-transform: capitalize;
   }
+  .readonly-dim-color {
+    opacity: 0.5; /* Example: Set opacity to make it look dimmed */
+}
+.custom-width{
+    width: 350px !important;
+}

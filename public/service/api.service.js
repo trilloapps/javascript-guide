@@ -20,7 +20,7 @@ function hideLoader() {
 class ApiService {
   constructor() {
     // Base URL for the API
-    this.apiUrl = 'https://fe-wb-lab1.kdlabs.dev';
+    this.apiUrl = 'https://api.apps-demo-2.trilloapps.com';
 
     // Default headers for API requests, including authorization token from local storage
     this.headers = {
@@ -160,6 +160,149 @@ class ApiService {
         throw error; // Propagate the error for handling in the calling code
       });
   }
+  getUsersDetails(body) {
+    const endpoint = '/ds/page/auth/vault';
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    const payload = body;
+    // Show the loader before making the API call
+    showLoader();
+    // Perform request to get item details
+    return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
+  editUsersDetails(body) {
+    const endpoint = '/_service/um/editUser';
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    const payload = body;
+    // Show the loader before making the API call
+    showLoader();
+    // Perform request to get item details
+    return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
+  deleteUsersDetails(body) {
+    const endpoint = '/_service/um/deleteUser?id='+body;
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    // Show the loader before making the API call
+    showLoader();
+    // Perform request to get item details
+    return fetch(url, { method: 'DELETE', headers: headers })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
+  suspendUsersDetails(body) {
+    const endpoint = '/_service/um/toggleSuspendActive';
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    const payload = body;
+    // Show the loader before making the API call
+    showLoader();
+    // Perform request to get item details
+    return fetch(url, { method: 'POST', headers: headers,body: JSON.stringify(payload)  })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
+  resetPassword(body) {
+    const endpoint = '/_service/um/resetPassword';
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    const payload = body;
+    // Show the loader before making the API call
+    showLoader();
+    // Perform request to get item details
+    return fetch(url, { method: 'POST', headers: headers,body: JSON.stringify(payload)  })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
+  newuser(body) {
+    const endpoint = '/_service/um/newUser';
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    const payload = body;
+    // Show the loader before making the API call
+    showLoader();
+    // Perform request to get item details
+    return fetch(url, { method: 'POST', headers: headers,body: JSON.stringify(payload)  })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        hideLoader();
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+        hideLoader();
+
+
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
 
   // Method to edit a line item
   editLineItem(data) {
@@ -187,7 +330,30 @@ class ApiService {
       .then(response => response.json())
       .catch(error => console.error('Login Error:', error));
   }
+  saveSignupDetails(body) {
+    const endpoint = '/_preauthsvc/user/signup';
+    const url = this.apiUrl + endpoint;
+    const headers = this.headers;
+    const payload = body;
+    // Show the loader before making the API call
+    // Perform request to get item details
+    return fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) })
+      .then(response => response.json())
+      .then(data => {
+        // Hide the loader after the API call is complete
+        return data;
+      })
+      .catch(error => {
+        // Hide the loader in case of an error
+  
+  
+        console.error('API Error:', error);
+        throw error; // Propagate the error for handling in the calling code
+      });
+  }
 }
+
+
 
 // Create an instance of ApiService
 const apiService = new ApiService();
