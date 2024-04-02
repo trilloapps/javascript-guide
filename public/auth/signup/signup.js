@@ -110,25 +110,30 @@ function validateForm(newUserForm) {
 
 // Send sign-up request with reCAPTCHA token
 function sendSignUpRequestWithRecaptchaToken(newUserForm) {
+    var submitText = document.getElementById('submitText');
+    var loader = document.getElementById('loader');
+    submitText.style.display = 'none';
+    loader.style.display = 'inline';
     intializeFirbase();
     newUserFormValue = newUserForm; // Assign newUserFormParam to the global newUserForm variable
 
     console.log(newUserForm);
     setTimeout(() => {
-        Loader = true;
+        submitText.style.display = 'inline';
+        loader.style.display = 'none';
         let phoneNumber = newUserForm.mobilePhone; // Ensure phoneNumber is treated as a string
         console.log("Phone Number:", phoneNumber); // Log the phone number as a string
         firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
             .then(async (confirmationResult) => {
                 if (recaptchaVerifier.verify()) {
                     fireBaseConfirmationResult = confirmationResult;
-                    console.log(fireBaseConfirmationResult, 'OTP code has been sent to the phone', 'success', 'success');
+                    showToast('OTP code has been sent to the phone', 'success', 'success');
                     signupCardContainer = document.getElementById('signupCardContainer').style.display = 'none';
                     verificationCardContainer = document.getElementById('verificationCardContainer').style.display = 'block'
                 }
             })
             .catch((error) => {
-                console.log(error);
+                showToast(error.message, 'danger', 'danger');
                 Loader = false;
                 console.error(error.message, 'error', 'danger');
 

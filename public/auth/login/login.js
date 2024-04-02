@@ -71,26 +71,32 @@ firebase.initializeApp(firebaseConfig);
 
 // Function to handle form submission
 function LoginSubmitForm() {
+  var submitText = document.getElementById('submitText');
+  var loader = document.getElementById('loader');
+
     // Validate inputs before making API call
     if (validateInputs()) {
         const userId = userIdInput.value;
         const password = passwordInput.value;
-
+        submitText.style.display = 'none';
+        loader.style.display = 'inline';
         // Call the login API
         apiService.login(userId, password)
             .then(response => {
+                submitText.style.display = 'inline';
+                loader.style.display = 'none';
                 if (response.status == 'connected') {
                     loginResponse = response
                     sendSignUpRequestWithRecaptchaToken(response.user.mobilePhone)
                 } else {
                     // Display error message and toast on login failure
                     console.log(response.message);
-                    showToast(response.message, 'danger');
+                    showToast(response.message, 'danger', 'danger');
                 }
             })
             .catch(error => {
                 // Display error toast on API call failure
-                showToast(error.message, 'danger');
+                showToast(error.message, 'danger', 'danger');
             });
     }
 }
@@ -121,7 +127,7 @@ function sendSignUpRequestWithRecaptchaToken(mobilePhone) {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                showToast(error.message, 'danger', 'danger');
                 Loader = false;
                 console.error(error.message, 'error', 'danger')
             });
