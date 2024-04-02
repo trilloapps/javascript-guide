@@ -90,7 +90,14 @@
     <!-- Form group for the Submit button -->
     <div class='form-group mb-3 '>
       <!-- Submit button with primary styling -->
-      <button class='btn btn-primary w-100 mt-1' type="button" onClick="SignupSubmitForm()">Submit</button>
+      <button class='btn btn-primary w-100 mt-1 position-relative auth-btn' type="submit" onClick="SignupSubmitForm()">
+        <span id="submitText">Submit</span>
+        <div id="loader" style="display: none;">
+          <div  class="spinner-border auth-loader" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </button>
   </div>
 
     <div class="text-center">

@@ -171,3 +171,13 @@ table tr {
 .custom-width{
     width: 350px !important;
 }
+.auth-loader{
+    position: absolute;
+    top: 25%;
+    left: 48%;
+    height: 20px !important;
+    width: 20px !important;
+}
+.auth-btn{
+    height: 37.6px !important;
+}

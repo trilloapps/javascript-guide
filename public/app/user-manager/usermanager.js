@@ -125,7 +125,6 @@ function openEditModal(data) {
   editModal.show();
 }
 
-<<<<<<< HEAD:public/app/user-manager/usermanager.js
 function clearErrorMessages() {
   const errorElements = document.querySelectorAll('.text-danger.support-text');
   errorElements.forEach(element => {
@@ -141,8 +140,6 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   }
 })
-=======
->>>>>>> development/1.0:app/user-manager/usermanager.js
 function openResetModal(data) {
     console.log('Opening Reset Password Modal for:', data);
     selectedItem = data;
