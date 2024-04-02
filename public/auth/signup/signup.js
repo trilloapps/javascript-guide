@@ -192,8 +192,6 @@ function CallSignUpAPI() {
     // Call the login API
     apiService.saveSignupDetails(newUserFormValue)
         .then(result => {
-            submitText.style.display = 'inline';
-            loader.style.display = 'none';
             if (result.status == 'success') {
                 showToast(result.message, 'success', 'success');
                 setTimeout(() => {
